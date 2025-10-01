@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Progress } from '@/components/ui/progress';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import Icon from '@/components/ui/icon';
 
@@ -50,7 +51,13 @@ export default function Index() {
     smsCode: '',
   });
   const [smsSent, setSmsSent] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isEmbedded, setIsEmbedded] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    setIsEmbedded(window.self !== window.top);
+  }, []);
 
   const totalSteps = 7;
   const progressPercent = (step / totalSteps) * 100;
@@ -74,10 +81,7 @@ export default function Index() {
     if (step < totalSteps) {
       setStep(step + 1);
     } else {
-      toast({
-        title: 'Заявка отправлена',
-        description: 'Мы свяжемся с вами в ближайшее время',
-      });
+      setShowSuccessModal(true);
     }
   };
 
@@ -553,15 +557,17 @@ export default function Index() {
             Заявка на займ
           </h1>
           <p className="text-muted-foreground">Быстрое оформление за 5 минут</p>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => window.location.href = '/embed'}
-            className="mt-4"
-          >
-            <Icon name="Code2" size={16} className="mr-2" />
-            Получить код для сайта
-          </Button>
+          {!isEmbedded && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => window.location.href = '/embed'}
+              className="mt-4"
+            >
+              <Icon name="Code2" size={16} className="mr-2" />
+              Получить код для сайта
+            </Button>
+          )}
         </div>
 
         <Card className="p-6 mb-6 shadow-lg">
@@ -615,6 +621,70 @@ export default function Index() {
           ))}
         </div>
       </div>
+
+      <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="mx-auto w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center mb-4">
+              <Icon name="CheckCircle2" className="text-white" size={32} />
+            </div>
+            <DialogTitle className="text-center text-2xl">
+              Заявка отправлена на рассмотрение
+            </DialogTitle>
+            <DialogDescription className="text-center text-base pt-2">
+              С вами свяжутся специалисты в ближайшее время
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 pt-4">
+            <Card className="p-4 bg-blue-50 border-blue-200">
+              <div className="flex gap-3">
+                <Icon name="Clock" className="text-blue-600 flex-shrink-0" size={20} />
+                <div>
+                  <p className="text-sm font-semibold text-blue-900">Время рассмотрения</p>
+                  <p className="text-xs text-blue-700">От 5 минут до 1 часа</p>
+                </div>
+              </div>
+            </Card>
+            <Card className="p-4 bg-purple-50 border-purple-200">
+              <div className="flex gap-3">
+                <Icon name="Phone" className="text-purple-600 flex-shrink-0" size={20} />
+                <div>
+                  <p className="text-sm font-semibold text-purple-900">Способ связи</p>
+                  <p className="text-xs text-purple-700">Звонок на {formData.phone}</p>
+                </div>
+              </div>
+            </Card>
+            <Button
+              onClick={() => {
+                setShowSuccessModal(false);
+                setStep(1);
+                setFormData({
+                  loanAmount: 10000,
+                  loanTerm: 14,
+                  firstName: '',
+                  lastName: '',
+                  middleName: '',
+                  birthDate: '',
+                  phone: '',
+                  email: '',
+                  regAddress: '',
+                  actualAddress: '',
+                  sameAddress: false,
+                  workplace: '',
+                  position: '',
+                  monthlyIncome: '',
+                  passportPhoto: null,
+                  cardPhoto: null,
+                  smsCode: '',
+                });
+              }}
+              className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90"
+            >
+              Понятно
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
