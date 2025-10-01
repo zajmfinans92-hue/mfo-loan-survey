@@ -553,6 +553,15 @@ export default function Index() {
             Заявка на займ
           </h1>
           <p className="text-muted-foreground">Быстрое оформление за 5 минут</p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.location.href = '/embed'}
+            className="mt-4"
+          >
+            <Icon name="Code2" size={16} className="mr-2" />
+            Получить код для сайта
+          </Button>
         </div>
 
         <Card className="p-6 mb-6 shadow-lg">
