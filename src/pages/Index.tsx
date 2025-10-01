@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -52,12 +52,7 @@ export default function Index() {
   });
   const [smsSent, setSmsSent] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [isEmbedded, setIsEmbedded] = useState(false);
   const { toast } = useToast();
-
-  useEffect(() => {
-    setIsEmbedded(window.self !== window.top);
-  }, []);
 
   const totalSteps = 7;
   const progressPercent = (step / totalSteps) * 100;
@@ -557,17 +552,6 @@ export default function Index() {
             Заявка на займ
           </h1>
           <p className="text-muted-foreground">Быстрое оформление за 5 минут</p>
-          {!isEmbedded && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => window.location.href = '/embed'}
-              className="mt-4"
-            >
-              <Icon name="Code2" size={16} className="mr-2" />
-              Получить код для сайта
-            </Button>
-          )}
         </div>
 
         <Card className="p-6 mb-6 shadow-lg">
