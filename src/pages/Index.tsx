@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -52,7 +52,15 @@ export default function Index() {
   });
   const [smsSent, setSmsSent] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [countdown, setCountdown] = useState(60);
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (showSuccessModal && countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessModal, countdown]);
 
   const totalSteps = 7;
   const progressPercent = (step / totalSteps) * 100;
@@ -76,6 +84,7 @@ export default function Index() {
     if (step < totalSteps) {
       setStep(step + 1);
     } else {
+      setCountdown(60);
       setShowSuccessModal(true);
     }
   };
@@ -545,7 +554,7 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-sky-50 py-8 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
@@ -609,32 +618,41 @@ export default function Index() {
       <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <div className="mx-auto w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center mb-4">
-              <Icon name="CheckCircle2" className="text-white" size={32} />
+            <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mb-4 animate-scale-in">
+              <Icon name="CheckCircle2" className="text-white" size={40} />
             </div>
-            <DialogTitle className="text-center text-2xl">
-              Заявка отправлена на рассмотрение
+            <DialogTitle className="text-center text-2xl font-bold">
+              Заявка принята на рассмотрение
             </DialogTitle>
             <DialogDescription className="text-center text-base pt-2">
               С вами свяжутся специалисты в ближайшее время
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 pt-4">
-            <Card className="p-4 bg-blue-50 border-blue-200">
+            <Card className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-300">
+              <div className="text-center space-y-2">
+                <div className="text-5xl font-bold text-blue-600">
+                  {Math.floor(countdown / 60)}:{(countdown % 60).toString().padStart(2, '0')}
+                </div>
+                <p className="text-sm text-blue-700">Примерное время рассмотрения</p>
+                <Progress value={((60 - countdown) / 60) * 100} className="h-2 mt-3" />
+              </div>
+            </Card>
+            <Card className="p-4 bg-gradient-to-br from-indigo-50 to-blue-50 border-indigo-200">
               <div className="flex gap-3">
-                <Icon name="Clock" className="text-blue-600 flex-shrink-0" size={20} />
+                <Icon name="Phone" className="text-indigo-600 flex-shrink-0" size={20} />
                 <div>
-                  <p className="text-sm font-semibold text-blue-900">Время рассмотрения</p>
-                  <p className="text-xs text-blue-700">От 5 минут до 1 часа</p>
+                  <p className="text-sm font-semibold text-indigo-900">Способ связи</p>
+                  <p className="text-xs text-indigo-700">Звонок на {formData.phone}</p>
                 </div>
               </div>
             </Card>
-            <Card className="p-4 bg-purple-50 border-purple-200">
+            <Card className="p-4 bg-gradient-to-br from-sky-50 to-blue-50 border-sky-200">
               <div className="flex gap-3">
-                <Icon name="Phone" className="text-purple-600 flex-shrink-0" size={20} />
+                <Icon name="Mail" className="text-sky-600 flex-shrink-0" size={20} />
                 <div>
-                  <p className="text-sm font-semibold text-purple-900">Способ связи</p>
-                  <p className="text-xs text-purple-700">Звонок на {formData.phone}</p>
+                  <p className="text-sm font-semibold text-sky-900">Подтверждение на email</p>
+                  <p className="text-xs text-sky-700">{formData.email}</p>
                 </div>
               </div>
             </Card>
@@ -642,6 +660,7 @@ export default function Index() {
               onClick={() => {
                 setShowSuccessModal(false);
                 setStep(1);
+                setCountdown(60);
                 setFormData({
                   loanAmount: 10000,
                   loanTerm: 14,
@@ -662,7 +681,7 @@ export default function Index() {
                   smsCode: '',
                 });
               }}
-              className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90"
+              className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white"
             >
               Понятно
             </Button>
