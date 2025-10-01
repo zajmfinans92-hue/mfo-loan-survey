@@ -143,36 +143,36 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-sky-50 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-sky-50 py-4 md:py-8 px-4">
       <div className="max-w-2xl mx-auto">
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+        <div className="mb-4 md:mb-8 text-center px-2">
+          <h1 className="text-2xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Заявка на займ
           </h1>
-          <p className="text-muted-foreground">Быстрое оформление за 5 минут</p>
+          <p className="text-sm md:text-base text-muted-foreground">Быстрое оформление за 5 минут</p>
         </div>
 
-        <Card className="p-6 mb-6 shadow-lg">
-          <div className="mb-6">
+        <Card className="p-4 md:p-6 mb-4 md:mb-6 shadow-lg">
+          <div className="mb-4 md:mb-6">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-muted-foreground">
+              <span className="text-xs md:text-sm font-medium text-muted-foreground">
                 Шаг {step} из {totalSteps}
               </span>
-              <span className="text-sm font-medium text-primary">
+              <span className="text-xs md:text-sm font-medium text-primary">
                 {Math.round(progressPercent)}%
               </span>
             </div>
-            <Progress value={progressPercent} className="h-2" />
+            <Progress value={progressPercent} className="h-1.5 md:h-2" />
           </div>
 
-          <div className="mb-8">{renderStep()}</div>
+          <div className="mb-6 md:mb-8">{renderStep()}</div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
             {step > 1 && (
               <Button
                 onClick={handlePrev}
                 variant="outline"
-                className="flex-1"
+                className="w-full sm:flex-1 h-11 md:h-10"
               >
                 <Icon name="ChevronLeft" size={20} className="mr-2" />
                 Назад
@@ -180,7 +180,7 @@ export default function Index() {
             )}
             <Button
               onClick={handleNext}
-              className="flex-1 bg-gradient-to-r from-primary to-accent hover:opacity-90"
+              className="w-full sm:flex-1 h-11 md:h-10 bg-gradient-to-r from-primary to-accent hover:opacity-90"
             >
               {step === totalSteps ? 'Отправить заявку' : smsSent && step === 3 ? 'Подтвердить код' : step === 3 ? 'Отправить SMS' : 'Далее'}
               <Icon name="ChevronRight" size={20} className="ml-2" />
@@ -188,13 +188,13 @@ export default function Index() {
           </div>
         </Card>
 
-        <div className="flex justify-center gap-2">
+        <div className="flex justify-center gap-1.5 md:gap-2 mb-4">
           {Array.from({ length: totalSteps }).map((_, i) => (
             <div
               key={i}
-              className={`w-2 h-2 rounded-full transition-all ${
+              className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all ${
                 i + 1 === step
-                  ? 'bg-primary w-8'
+                  ? 'bg-primary w-6 md:w-8'
                   : i + 1 < step
                   ? 'bg-primary/50'
                   : 'bg-gray-300'

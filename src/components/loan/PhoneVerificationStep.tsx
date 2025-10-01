@@ -16,17 +16,17 @@ export default function PhoneVerificationStep({
   smsSent,
 }: PhoneVerificationStepProps) {
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="text-center space-y-2">
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+    <div className="space-y-4 md:space-y-6 animate-fade-in">
+      <div className="text-center space-y-1 md:space-y-2">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
           Проверка номера телефона
         </h2>
-        <p className="text-muted-foreground">Подтвердите номер через SMS</p>
+        <p className="text-sm md:text-base text-muted-foreground">Подтвердите номер через SMS</p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 md:space-y-4">
         <div>
-          <Label>Номер телефона</Label>
+          <Label className="text-sm md:text-base">Номер телефона</Label>
           <Input
             type="tel"
             value={formData.phone}
@@ -34,14 +34,14 @@ export default function PhoneVerificationStep({
               setFormData({ ...formData, phone: e.target.value })
             }
             placeholder="+7 (900) 123-45-67"
-            className="mt-1.5"
+            className="mt-1.5 h-11 md:h-10 text-base"
             disabled={smsSent}
           />
         </div>
 
         {smsSent && (
           <div className="space-y-2 animate-fade-in">
-            <Label>Код из SMS</Label>
+            <Label className="text-sm md:text-base">Код из SMS</Label>
             <Input
               value={formData.smsCode}
               onChange={(e) =>
@@ -49,7 +49,7 @@ export default function PhoneVerificationStep({
               }
               placeholder="123456"
               maxLength={6}
-              className="mt-1.5 text-center text-2xl tracking-widest"
+              className="mt-1.5 text-center text-xl md:text-2xl tracking-widest h-12 md:h-14"
             />
             <p className="text-xs text-muted-foreground text-center">
               Не пришел код? <button className="text-primary hover:underline">Отправить снова</button>

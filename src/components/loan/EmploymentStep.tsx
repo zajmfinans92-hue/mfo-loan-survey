@@ -12,39 +12,39 @@ export default function EmploymentStep({
   setFormData,
 }: EmploymentStepProps) {
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="text-center space-y-2">
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+    <div className="space-y-4 md:space-y-6 animate-fade-in">
+      <div className="text-center space-y-1 md:space-y-2">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
           Информация о работе
         </h2>
-        <p className="text-muted-foreground">Расскажите о вашей занятости</p>
+        <p className="text-sm md:text-base text-muted-foreground">Расскажите о вашей занятости</p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 md:space-y-4">
         <div>
-          <Label>Место работы</Label>
+          <Label className="text-sm md:text-base">Место работы</Label>
           <Input
             value={formData.workplace}
             onChange={(e) =>
               setFormData({ ...formData, workplace: e.target.value })
             }
             placeholder="ООО 'Рога и Копыта'"
-            className="mt-1.5"
+            className="mt-1.5 h-11 md:h-10 text-base"
           />
         </div>
         <div>
-          <Label>Должность</Label>
+          <Label className="text-sm md:text-base">Должность</Label>
           <Input
             value={formData.position}
             onChange={(e) =>
               setFormData({ ...formData, position: e.target.value })
             }
             placeholder="Менеджер"
-            className="mt-1.5"
+            className="mt-1.5 h-11 md:h-10 text-base"
           />
         </div>
         <div>
-          <Label>Ежемесячный доход</Label>
+          <Label className="text-sm md:text-base">Ежемесячный доход</Label>
           <Input
             type="number"
             value={formData.monthlyIncome}
@@ -52,7 +52,7 @@ export default function EmploymentStep({
               setFormData({ ...formData, monthlyIncome: e.target.value })
             }
             placeholder="50000"
-            className="mt-1.5"
+            className="mt-1.5 h-11 md:h-10 text-base"
           />
         </div>
       </div>

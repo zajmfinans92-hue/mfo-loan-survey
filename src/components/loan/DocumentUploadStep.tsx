@@ -14,24 +14,24 @@ export default function DocumentUploadStep({
   handleFileUpload,
 }: DocumentUploadStepProps) {
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="text-center space-y-2">
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+    <div className="space-y-4 md:space-y-6 animate-fade-in">
+      <div className="text-center space-y-1 md:space-y-2">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
           Загрузка документов
         </h2>
-        <p className="text-muted-foreground">Фото паспорта и банковской карты</p>
+        <p className="text-sm md:text-base text-muted-foreground">Фото паспорта и банковской карты</p>
       </div>
 
-      <div className="space-y-4">
-        <Card className="p-6 border-dashed border-2 hover:border-primary transition-colors">
+      <div className="space-y-3 md:space-y-4">
+        <Card className="p-4 md:p-6 border-dashed border-2 hover:border-primary transition-colors">
           <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Icon name="FileText" className="text-primary" size={24} />
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <Icon name="FileText" className="text-primary" size={20} />
               </div>
-              <div>
-                <Label className="text-base font-semibold">Паспорт (разворот с фото)</Label>
-                <p className="text-sm text-muted-foreground">Формат: JPG, PNG (до 5 МБ)</p>
+              <div className="min-w-0">
+                <Label className="text-sm md:text-base font-semibold">Паспорт (разворот с фото)</Label>
+                <p className="text-xs md:text-sm text-muted-foreground">Формат: JPG, PNG (до 5 МБ)</p>
               </div>
             </div>
             <Input
@@ -52,15 +52,15 @@ export default function DocumentUploadStep({
           </div>
         </Card>
 
-        <Card className="p-6 border-dashed border-2 hover:border-primary transition-colors">
+        <Card className="p-4 md:p-6 border-dashed border-2 hover:border-primary transition-colors">
           <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Icon name="CreditCard" className="text-primary" size={24} />
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <Icon name="CreditCard" className="text-primary" size={20} />
               </div>
-              <div>
-                <Label className="text-base font-semibold">Банковская карта</Label>
-                <p className="text-sm text-muted-foreground">Формат: JPG, PNG (до 5 МБ)</p>
+              <div className="min-w-0">
+                <Label className="text-sm md:text-base font-semibold">Банковская карта</Label>
+                <p className="text-xs md:text-sm text-muted-foreground">Формат: JPG, PNG (до 5 МБ)</p>
               </div>
             </div>
             <Input
