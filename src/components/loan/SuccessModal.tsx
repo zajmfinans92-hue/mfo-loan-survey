@@ -20,6 +20,32 @@ export default function SuccessModal({
   formData,
   onClose,
 }: SuccessModalProps) {
+  const getCheckingStatus = () => {
+    if (countdown > 45) {
+      return {
+        text: 'Идёт проверка данных',
+        icon: 'FileSearch' as const,
+        color: 'text-blue-600',
+        bgColor: 'bg-blue-50',
+      };
+    } else if (countdown > 30) {
+      return {
+        text: 'Проверка в базе ФССП',
+        icon: 'Shield' as const,
+        color: 'text-orange-600',
+        bgColor: 'bg-orange-50',
+      };
+    } else {
+      return {
+        text: 'Анализ кредитного рейтинга',
+        icon: 'TrendingUp' as const,
+        color: 'text-green-600',
+        bgColor: 'bg-green-50',
+      };
+    }
+  };
+
+  const status = getCheckingStatus();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md rounded-3xl">
@@ -36,11 +62,14 @@ export default function SuccessModal({
         </DialogHeader>
         <div className="space-y-4 pt-4">
           <Card className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-300">
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-3">
               <div className="text-5xl font-bold text-blue-600">
                 {Math.floor(countdown / 60)}:{(countdown % 60).toString().padStart(2, '0')}
               </div>
-              <p className="text-sm text-blue-700">Примерное время рассмотрения</p>
+              <div className={`flex items-center justify-center gap-2 ${status.bgColor} px-4 py-2 rounded-full animate-fade-in`}>
+                <Icon name={status.icon} className={status.color} size={18} />
+                <p className={`text-sm font-semibold ${status.color}`}>{status.text}</p>
+              </div>
               <Progress value={((60 - countdown) / 60) * 100} className="h-2 mt-3" />
             </div>
           </Card>
