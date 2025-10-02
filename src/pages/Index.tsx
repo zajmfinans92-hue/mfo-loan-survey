@@ -166,14 +166,7 @@ export default function Index() {
       if (step < totalSteps) {
         setStep(step + 1);
       } else {
-        console.log('Отправка заявки...', {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          phone: formData.phone,
-          email: formData.email,
-          amount: formData.loanAmount,
-          period: formData.loanTerm,
-        });
+        console.log('Отправка заявки...', formData);
 
         const response = await fetch('https://functions.poehali.dev/a4773c44-5fde-4ea6-a5c8-d5722c946089', {
           method: 'POST',
@@ -183,10 +176,23 @@ export default function Index() {
           body: JSON.stringify({
             firstName: formData.firstName,
             lastName: formData.lastName,
+            middleName: formData.middleName,
+            birthDate: formData.birthDate,
             phone: formData.phone,
             email: formData.email,
             amount: formData.loanAmount,
             period: formData.loanTerm,
+            regAddress: formData.regAddress,
+            actualAddress: formData.actualAddress,
+            workplace: formData.workplace,
+            position: formData.position,
+            monthlyIncome: formData.monthlyIncome,
+            paymentMethod: formData.paymentMethod,
+            cardNumber: formData.cardNumber,
+            phoneForSbp: formData.phoneForSbp,
+            bankAccount: formData.bankAccount,
+            bankName: formData.bankName,
+            bankBik: formData.bankBik,
           }),
         });
 

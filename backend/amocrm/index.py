@@ -78,10 +78,23 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     
     first_name = body_data.get('firstName', '')
     last_name = body_data.get('lastName', '')
+    middle_name = body_data.get('middleName', '')
+    birth_date = body_data.get('birthDate', '')
     phone = body_data.get('phone', '')
     email = body_data.get('email', '')
     amount = body_data.get('amount', 0)
     period = body_data.get('period', 0)
+    reg_address = body_data.get('regAddress', '')
+    actual_address = body_data.get('actualAddress', '')
+    workplace = body_data.get('workplace', '')
+    position = body_data.get('position', '')
+    monthly_income = body_data.get('monthlyIncome', '')
+    payment_method = body_data.get('paymentMethod', '')
+    card_number = body_data.get('cardNumber', '')
+    phone_for_sbp = body_data.get('phoneForSbp', '')
+    bank_account = body_data.get('bankAccount', '')
+    bank_name = body_data.get('bankName', '')
+    bank_bik = body_data.get('bankBik', '')
     
     print(f'[DEBUG] Parsed: name={first_name} {last_name}, phone={phone}, amount={amount}')
     
@@ -97,6 +110,39 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'body': json.dumps({'error': 'Укажите имя и телефон'}),
             'isBase64Encoded': False
         }
+    
+    additional_info = []
+    if middle_name:
+        additional_info.append(f'Отчество: {middle_name}')
+    if birth_date:
+        additional_info.append(f'Дата рождения: {birth_date}')
+    if reg_address:
+        additional_info.append(f'Адрес регистрации: {reg_address}')
+    if actual_address:
+        additional_info.append(f'Адрес проживания: {actual_address}')
+    if workplace:
+        additional_info.append(f'Место работы: {workplace}')
+    if position:
+        additional_info.append(f'Должность: {position}')
+    if monthly_income:
+        additional_info.append(f'Ежемесячный доход: {monthly_income} руб.')
+    if payment_method:
+        payment_labels = {'card': 'Банковская карта', 'sbp': 'СБП', 'bank': 'Банковский счет'}
+        additional_info.append(f'Способ получения: {payment_labels.get(payment_method, payment_method)}')
+    if card_number:
+        additional_info.append(f'Номер карты: {card_number}')
+    if phone_for_sbp:
+        additional_info.append(f'Телефон СБП: {phone_for_sbp}')
+    if bank_account:
+        additional_info.append(f'Банковский счет: {bank_account}')
+    if bank_name:
+        additional_info.append(f'Банк: {bank_name}')
+    if bank_bik:
+        additional_info.append(f'БИК: {bank_bik}')
+    
+    additional_info.append(f'Срок займа: {period} дней')
+    
+    description_text = '\n'.join(additional_info)
     
     lead_payload = {
         'name': f'Заявка на займ от {full_name}',
@@ -114,6 +160,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             }]
         }
     }
+    
+    if description_text:
+        lead_payload['_embedded']['tags'] = [{'name': f'Срок: {period} дн'}]
     
     if email:
         lead_payload['_embedded']['contacts'][0]['custom_fields_values'].append({
@@ -149,6 +198,24 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             contacts = embedded.get('contacts', [])
             if contacts and len(contacts) > 0:
                 contact_id = contacts[0].get('id')
+            
+            if lead_id and description_text:
+                note_url = f'https://{amocrm_domain}/api/v4/leads/{lead_id}/notes'
+                note_payload = [{
+                    'note_type': 'common',
+                    'params': {
+                        'text': description_text
+                    }
+                }]
+                
+                note_data = json.dumps(note_payload).encode('utf-8')
+                note_req = urllib.request.Request(note_url, data=note_data, headers=headers, method='POST')
+                
+                try:
+                    urllib.request.urlopen(note_req, timeout=10)
+                    print(f'[DEBUG] Note added to lead {lead_id}')
+                except Exception as note_error:
+                    print(f'[WARNING] Failed to add note: {note_error}')
         
         return {
             'statusCode': 200,
