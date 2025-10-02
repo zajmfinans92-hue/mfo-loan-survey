@@ -166,6 +166,15 @@ export default function Index() {
       if (step < totalSteps) {
         setStep(step + 1);
       } else {
+        console.log('Отправка заявки...', {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phone: formData.phone,
+          email: formData.email,
+          amount: formData.loanAmount,
+          period: formData.loanTerm,
+        });
+
         const response = await fetch('https://functions.poehali.dev/a4773c44-5fde-4ea6-a5c8-d5722c946089', {
           method: 'POST',
           headers: {
@@ -181,7 +190,9 @@ export default function Index() {
           }),
         });
 
+        console.log('Response status:', response.status);
         const result = await response.json();
+        console.log('Response data:', result);
 
         if (!response.ok) {
           console.error('amoCRM error:', result);
