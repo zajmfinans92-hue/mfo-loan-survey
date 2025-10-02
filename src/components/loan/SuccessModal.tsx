@@ -22,16 +22,16 @@ export default function SuccessModal({
 }: SuccessModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md rounded-3xl">
         <DialogHeader>
           <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mb-4 animate-scale-in">
             <Icon name="CheckCircle2" className="text-white" size={40} />
           </div>
-          <DialogTitle className="text-center text-2xl font-bold">
-            Заявка принята на рассмотрение
+          <DialogTitle className="text-center text-xl md:text-2xl font-bold">
+            Заявка принята!
           </DialogTitle>
-          <DialogDescription className="text-center text-base pt-2">
-            С вами свяжутся специалисты в ближайшее время
+          <DialogDescription className="text-center text-sm md:text-base pt-2">
+            Менеджер свяжется с вами в ближайшее время
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 pt-4">
