@@ -2,13 +2,38 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Icon from '@/components/ui/icon';
 import { FormData } from './types';
+import InputMask from 'react-input-mask';
 
 type PaymentMethodStepProps = {
   formData: FormData;
   setFormData: (data: FormData) => void;
 };
+
+const RUSSIAN_BANKS = [
+  'Сбербанк',
+  'ВТБ',
+  'Газпромбанк',
+  'Альфа-Банк',
+  'Россельхозбанк',
+  'Открытие',
+  'Совкомбанк',
+  'Промсвязьбанк',
+  'Райффайзенбанк',
+  'Росбанк',
+  'Банк Санкт-Петербург',
+  'МКБ',
+  'Ак Барс',
+  'Уралсиб',
+  'Почта Банк',
+  'ЮниКредит Банк',
+  'Хоум Кредит Банк',
+  'ОТП Банк',
+  'Банк Зенит',
+  'Тинькофф Банк'
+];
 
 export default function PaymentMethodStep({
   formData,
@@ -105,15 +130,38 @@ export default function PaymentMethodStep({
             <div className="mt-4 space-y-3">
               <div>
                 <Label className="text-sm">
+                  Выберите банк <span className="text-red-500">*</span>
+                </Label>
+                <Select
+                  value={formData.sbpBank || ''}
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, sbpBank: value })
+                  }
+                >
+                  <SelectTrigger className="mt-1.5 h-11 md:h-10">
+                    <SelectValue placeholder="Выберите банк" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-[300px]">
+                    {RUSSIAN_BANKS.map((bank) => (
+                      <SelectItem key={bank} value={bank}>
+                        {bank}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label className="text-sm">
                   Номер телефона для СБП <span className="text-red-500">*</span>
                 </Label>
-                <Input
+                <InputMask
+                  mask="+7 (999) 999-99-99"
                   value={formData.phoneForSbp || ''}
                   onChange={(e) =>
                     setFormData({ ...formData, phoneForSbp: e.target.value })
                   }
                   placeholder="+7 (999) 123-45-67"
-                  className="mt-1.5 h-11 md:h-10 text-base"
+                  className="flex h-11 md:h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1.5"
                   required
                 />
               </div>

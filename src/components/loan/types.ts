@@ -18,6 +18,7 @@ export type FormData = {
   paymentMethod: 'card' | 'sbp' | 'bank';
   cardNumber?: string;
   phoneForSbp?: string;
+  sbpBank?: string;
   bankAccount?: string;
   bankName?: string;
   bankBik?: string;

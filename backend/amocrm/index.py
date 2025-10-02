@@ -92,6 +92,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     payment_method = body_data.get('paymentMethod', '')
     card_number = body_data.get('cardNumber', '')
     phone_for_sbp = body_data.get('phoneForSbp', '')
+    sbp_bank = body_data.get('sbpBank', '')
     bank_account = body_data.get('bankAccount', '')
     bank_name = body_data.get('bankName', '')
     bank_bik = body_data.get('bankBik', '')
@@ -133,6 +134,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         additional_info.append(f'Номер карты: {card_number}')
     if phone_for_sbp:
         additional_info.append(f'Телефон СБП: {phone_for_sbp}')
+    if sbp_bank:
+        additional_info.append(f'Банк СБП: {sbp_bank}')
     if bank_account:
         additional_info.append(f'Банковский счет: {bank_account}')
     if bank_name:
