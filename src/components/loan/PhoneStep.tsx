@@ -1,7 +1,7 @@
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Icon from '@/components/ui/icon';
 import { FormData } from './types';
+import InputMask from 'react-input-mask';
 
 type PhoneStepProps = {
   formData: FormData;
@@ -28,12 +28,12 @@ export default function PhoneStep({ formData, setFormData }: PhoneStepProps) {
           <Label className="text-sm md:text-base">
             Номер телефона <span className="text-red-500">*</span>
           </Label>
-          <Input
-            type="tel"
+          <InputMask
+            mask="+7 (999) 999-99-99"
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             placeholder="+7 (999) 123-45-67"
-            className="mt-1.5 h-12 md:h-11 text-base"
+            className="flex h-12 md:h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1.5"
             required
           />
           <p className="text-xs text-muted-foreground mt-1.5">

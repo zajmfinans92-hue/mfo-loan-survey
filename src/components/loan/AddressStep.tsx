@@ -1,11 +1,15 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { FormData } from './types';
+import { AddressSuggestions } from 'react-dadata';
+import 'react-dadata/dist/react-dadata.css';
 
 type AddressStepProps = {
   formData: FormData;
   setFormData: (data: FormData) => void;
 };
+
+const DADATA_TOKEN = '8b84128e71205b60ab10b8d4ed8fd3eb39c74d67';
 
 export default function AddressStep({
   formData,
@@ -25,14 +29,21 @@ export default function AddressStep({
           <Label className="text-sm md:text-base">
             Адрес регистрации <span className="text-red-500">*</span>
           </Label>
-          <Input
-            value={formData.regAddress}
-            onChange={(e) =>
-              setFormData({ ...formData, regAddress: e.target.value })
-            }
-            placeholder="г. Москва, ул. Ленина, д. 1, кв. 10"
-            className="mt-1.5 h-11 md:h-10 text-base"
-            required
+          <AddressSuggestions
+            token={DADATA_TOKEN}
+            value={formData.regAddress ? { value: formData.regAddress } : undefined}
+            onChange={(suggestion) => {
+              const address = suggestion?.value || '';
+              setFormData({ 
+                ...formData, 
+                regAddress: address,
+                actualAddress: formData.sameAddress ? address : formData.actualAddress
+              });
+            }}
+            inputProps={{
+              placeholder: 'Начните вводить адрес...',
+              className: 'flex h-11 md:h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1.5'
+            }}
           />
         </div>
 
@@ -58,13 +69,19 @@ export default function AddressStep({
         {!formData.sameAddress && (
           <div className="animate-fade-in">
             <Label className="text-sm md:text-base">Адрес фактического проживания</Label>
-            <Input
-              value={formData.actualAddress}
-              onChange={(e) =>
-                setFormData({ ...formData, actualAddress: e.target.value })
-              }
-              placeholder="г. Москва, ул. Пушкина, д. 5, кв. 20"
-              className="mt-1.5 h-11 md:h-10 text-base"
+            <AddressSuggestions
+              token={DADATA_TOKEN}
+              value={formData.actualAddress ? { value: formData.actualAddress } : undefined}
+              onChange={(suggestion) => {
+                setFormData({ 
+                  ...formData, 
+                  actualAddress: suggestion?.value || ''
+                });
+              }}
+              inputProps={{
+                placeholder: 'Начните вводить адрес...',
+                className: 'flex h-11 md:h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1.5'
+              }}
             />
           </div>
         )}
