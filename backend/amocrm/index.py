@@ -40,23 +40,32 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     amocrm_domain = os.environ.get('AMOCRM_DOMAIN', '').strip()
     access_token = os.environ.get('AMOCRM_ACCESS_TOKEN', '').strip()
     
+    print(f'[DEBUG] Domain: {amocrm_domain[:20] if amocrm_domain else "empty"}...')
+    print(f'[DEBUG] Token exists: {bool(access_token)}')
+    
     if not amocrm_domain or not access_token:
+        error_msg = {
+            'error': 'Настройки amoCRM не заданы',
+            'details': 'Добавьте секреты AMOCRM_DOMAIN и AMOCRM_ACCESS_TOKEN',
+            'domain_set': bool(amocrm_domain),
+            'token_set': bool(access_token)
+        }
+        print(f'[ERROR] Config missing: {error_msg}')
         return {
             'statusCode': 500,
             'headers': {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
-            'body': json.dumps({
-                'error': 'Настройки amoCRM не заданы',
-                'details': 'Добавьте секреты AMOCRM_DOMAIN и AMOCRM_ACCESS_TOKEN'
-            }),
+            'body': json.dumps(error_msg),
             'isBase64Encoded': False
         }
     
     try:
         body_data = json.loads(event.get('body', '{}'))
-    except json.JSONDecodeError:
+        print(f'[DEBUG] Received data: {body_data}')
+    except json.JSONDecodeError as e:
+        print(f'[ERROR] JSON decode error: {e}')
         return {
             'statusCode': 400,
             'headers': {
@@ -73,6 +82,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     email = body_data.get('email', '')
     amount = body_data.get('amount', 0)
     period = body_data.get('period', 0)
+    
+    print(f'[DEBUG] Parsed: name={first_name} {last_name}, phone={phone}, amount={amount}')
     
     full_name = f'{first_name} {last_name}'.strip()
     
@@ -120,10 +131,14 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     
     try:
         request_data = json.dumps([lead_payload]).encode('utf-8')
+        print(f'[DEBUG] Sending to amoCRM: {api_url}')
+        print(f'[DEBUG] Payload: {lead_payload}')
+        
         req = urllib.request.Request(api_url, data=request_data, headers=headers, method='POST')
         
         response = urllib.request.urlopen(req, timeout=10)
         response_data = json.loads(response.read().decode('utf-8'))
+        print(f'[DEBUG] amoCRM response: {response_data}')
         
         lead_id = None
         contact_id = None
@@ -152,6 +167,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         
     except urllib.error.HTTPError as e:
         error_body = e.read().decode('utf-8', errors='ignore')
+        print(f'[ERROR] amoCRM HTTP {e.code}: {error_body}')
         return {
             'statusCode': e.code,
             'headers': {
