@@ -249,9 +249,16 @@ export default function Index() {
     <div className="min-h-screen bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-600 py-4 md:py-8 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="mb-4 md:mb-8 text-center px-2">
-          <h1 className="text-2xl md:text-4xl font-bold mb-2 text-white drop-shadow-lg">
-            Заявка на займ
-          </h1>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <img 
+              src="https://cdn.poehali.dev/files/8e6a9c1a-a95c-47fa-a912-9ffdc0f5dbea.png" 
+              alt="Logo" 
+              className="h-12 md:h-16 w-auto"
+            />
+            <h1 className="text-2xl md:text-4xl font-bold text-white drop-shadow-lg">
+              Заявка на займ
+            </h1>
+          </div>
           <p className="text-sm md:text-base text-blue-100">Быстрое оформление за 5 минут</p>
         </div>
 
