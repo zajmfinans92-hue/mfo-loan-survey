@@ -172,7 +172,8 @@ export default function Index() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            name: `${formData.firstName} ${formData.lastName}`,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
             phone: formData.phone,
             email: formData.email,
             amount: formData.loanAmount,
@@ -180,9 +181,14 @@ export default function Index() {
           }),
         });
 
+        const result = await response.json();
+
         if (!response.ok) {
-          throw new Error('Failed to send application');
+          console.error('amoCRM error:', result);
+          throw new Error(result.error || 'Failed to send application');
         }
+
+        console.log('amoCRM success:', result);
 
         setCountdown(60);
         setShowSuccessModal(true);

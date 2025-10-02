@@ -1,26 +1,28 @@
 {
   "tests": [
     {
-      "name": "Handle OPTIONS request",
+      "name": "CORS OPTIONS запрос",
       "method": "OPTIONS",
       "path": "/",
       "expectedStatus": 200,
       "bodyMatcher": "partial"
     },
     {
-      "name": "Send loan application to amoCRM",
+      "name": "Отправка полной заявки в amoCRM",
       "method": "POST",
       "path": "/",
       "body": {
-        "name": "Иван Иванов",
+        "firstName": "Иван",
+        "lastName": "Петров",
         "phone": "+79991234567",
-        "email": "test@example.com",
+        "email": "ivan@example.com",
         "amount": 50000,
         "period": 30
       },
       "expectedStatus": 200,
       "expectedBody": {
-        "success": true
+        "success": true,
+        "message": "string"
       },
       "bodyMatcher": "partial"
     }
