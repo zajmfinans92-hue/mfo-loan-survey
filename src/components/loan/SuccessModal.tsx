@@ -50,14 +50,14 @@ export default function SuccessModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md rounded-3xl">
         <DialogHeader>
-          <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mb-4 animate-scale-in">
-            <Icon name="CheckCircle2" className="text-white" size={40} />
+          <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center mb-4 animate-scale-in">
+            <Icon name="Clock" className="text-white" size={40} />
           </div>
           <DialogTitle className="text-center text-xl md:text-2xl font-bold">
-            Заявка принята!
+            Ожидайте решение
           </DialogTitle>
           <DialogDescription className="text-center text-sm md:text-base pt-2">
-            Менеджер свяжется с вами в ближайшее время
+            Идет проверка данных
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 pt-4">
