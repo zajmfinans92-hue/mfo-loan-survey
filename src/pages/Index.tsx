@@ -166,13 +166,31 @@ export default function Index() {
       if (step < totalSteps) {
         setStep(step + 1);
       } else {
+        const response = await fetch('https://functions.poehali.dev/a4773c44-5fde-4ea6-a5c8-d5722c946089', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: `${formData.firstName} ${formData.lastName}`,
+            phone: formData.phone,
+            email: formData.email,
+            amount: formData.loanAmount,
+            period: formData.loanTerm,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to send application');
+        }
+
         setCountdown(60);
         setShowSuccessModal(true);
       }
     } catch (error) {
       toast({
         title: 'Ошибка',
-        description: 'Произошла ошибка. Попробуйте снова.',
+        description: 'Произошла ошибка при отправке заявки. Попробуйте снова.',
         variant: 'destructive',
       });
     } finally {
