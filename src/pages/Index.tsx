@@ -342,12 +342,6 @@ export default function Index() {
               <p className="text-base md:text-lg text-muted-foreground">
                 Менеджер свяжется с вами в ближайшее время
               </p>
-              <Button
-                onClick={handleCloseModal}
-                className="w-full h-12 bg-gradient-to-r from-primary to-accent hover:opacity-90 text-lg"
-              >
-                Отлично!
-              </Button>
             </div>
           </div>
         </div>
