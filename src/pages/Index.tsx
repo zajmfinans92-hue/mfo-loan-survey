@@ -8,7 +8,7 @@ import Icon from '@/components/ui/icon';
 import { FormData } from '@/components/loan/types';
 import LoanCalculatorStep from '@/components/loan/LoanCalculatorStep';
 import PersonalDataStep from '@/components/loan/PersonalDataStep';
-import PhoneVerificationStep from '@/components/loan/PhoneVerificationStep';
+import PaymentMethodStep from '@/components/loan/PaymentMethodStep';
 import DocumentUploadStep from '@/components/loan/DocumentUploadStep';
 import AddressStep from '@/components/loan/AddressStep';
 import EmploymentStep from '@/components/loan/EmploymentStep';
@@ -34,9 +34,9 @@ export default function Index() {
     monthlyIncome: '',
     passportPhoto: null,
     cardPhoto: null,
-    smsCode: '',
+    paymentMethod: 'card',
   });
-  const [smsSent, setSmsSent] = useState(false);
+
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [countdown, setCountdown] = useState(60);
   const [loading, setLoading] = useState(false);
@@ -66,49 +66,6 @@ export default function Index() {
     setLoading(true);
 
     try {
-      if (step === 3 && !smsSent) {
-        const response = await fetch('https://functions.poehali.dev/8f153db8-fd92-4a78-9014-13e1109af059', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ phone: formData.phone }),
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          setSmsSent(true);
-          toast({
-            title: 'SMS отправлено',
-            description: 'Введите код из SMS',
-          });
-        } else {
-          toast({
-            title: 'Ошибка отправки SMS',
-            description: data.error || 'Попробуйте снова',
-            variant: 'destructive',
-          });
-        }
-        setLoading(false);
-        return;
-      }
-
-      if (step === 3 && smsSent) {
-        const response = await fetch(
-          `https://functions.poehali.dev/8f153db8-fd92-4a78-9014-13e1109af059?phone=${formData.phone}&code=${formData.smsCode}`
-        );
-        const data = await response.json();
-
-        if (!data.valid) {
-          toast({
-            title: 'Неверный код',
-            description: 'Проверьте код из SMS',
-            variant: 'destructive',
-          });
-          setLoading(false);
-          return;
-        }
-      }
-
       await new Promise((resolve) => setTimeout(resolve, 800));
 
       if (step < totalSteps) {
@@ -141,7 +98,6 @@ export default function Index() {
     setShowFinalModal(false);
     setStep(1);
     setCountdown(60);
-    setSmsSent(false);
     setFormData({
       loanAmount: 10000,
       loanTerm: 14,
@@ -159,7 +115,7 @@ export default function Index() {
       monthlyIncome: '',
       passportPhoto: null,
       cardPhoto: null,
-      smsCode: '',
+      paymentMethod: 'card',
     });
   };
 
@@ -176,13 +132,7 @@ export default function Index() {
       case 2:
         return <PersonalDataStep formData={formData} setFormData={setFormData} />;
       case 3:
-        return (
-          <PhoneVerificationStep
-            formData={formData}
-            setFormData={setFormData}
-            smsSent={smsSent}
-          />
-        );
+        return <PaymentMethodStep formData={formData} setFormData={setFormData} />;
       case 4:
         return (
           <DocumentUploadStep formData={formData} handleFileUpload={handleFileUpload} />
@@ -208,7 +158,7 @@ export default function Index() {
           <p className="text-sm md:text-base text-muted-foreground">Быстрое оформление за 5 минут</p>
         </div>
 
-        <Card className="p-4 md:p-6 mb-4 md:mb-6 shadow-lg">
+        <Card className="p-4 md:p-6 mb-4 md:mb-6 shadow-lg rounded-3xl">
           <div className="mb-4 md:mb-6">
             <div className="flex justify-between items-center mb-2">
               <span className="text-xs md:text-sm font-medium text-muted-foreground">
@@ -251,7 +201,7 @@ export default function Index() {
               {loading ? (
                 <Loader size="sm" className="mr-2" />
               ) : null}
-              {step === totalSteps ? 'Отправить заявку' : smsSent && step === 3 ? 'Подтвердить код' : step === 3 ? 'Отправить SMS' : 'Далее'}
+              {step === totalSteps ? 'Отправить заявку' : 'Далее'}
               {!loading && <Icon name="ChevronRight" size={20} className="ml-2" />}
             </Button>
           </div>

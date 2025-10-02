@@ -46,9 +46,17 @@ export default function ReviewStep({ formData }: ReviewStepProps) {
           <span className="text-sm md:text-base text-muted-foreground">Место работы:</span>
           <span className="text-sm md:text-base font-semibold break-words text-right">{formData.workplace}</span>
         </div>
-        <div className="flex flex-col sm:flex-row justify-between gap-1">
+        <div className="flex flex-col sm:flex-row justify-between border-b pb-2 md:pb-3 gap-1">
           <span className="text-sm md:text-base text-muted-foreground">Доход:</span>
           <span className="text-sm md:text-base font-semibold">{Number(formData.monthlyIncome).toLocaleString('ru-RU')} ₽</span>
+        </div>
+        <div className="flex flex-col sm:flex-row justify-between gap-1">
+          <span className="text-sm md:text-base text-muted-foreground">Способ получения:</span>
+          <span className="text-sm md:text-base font-semibold">
+            {formData.paymentMethod === 'card' && 'На банковскую карту'}
+            {formData.paymentMethod === 'sbp' && 'Через СБП'}
+            {formData.paymentMethod === 'bank' && 'На банковский счёт'}
+          </span>
         </div>
       </Card>
 

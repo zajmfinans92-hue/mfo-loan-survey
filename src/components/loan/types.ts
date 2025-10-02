@@ -15,5 +15,10 @@ export type FormData = {
   monthlyIncome: string;
   passportPhoto: File | null;
   cardPhoto: File | null;
-  smsCode: string;
+  paymentMethod: 'card' | 'sbp' | 'bank';
+  cardNumber?: string;
+  phoneForSbp?: string;
+  bankAccount?: string;
+  bankName?: string;
+  bankBik?: string;
 };
