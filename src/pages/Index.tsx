@@ -7,6 +7,7 @@ import { Loader } from '@/components/ui/loader';
 import Icon from '@/components/ui/icon';
 import { FormData } from '@/components/loan/types';
 import LoanCalculatorStep from '@/components/loan/LoanCalculatorStep';
+import PhoneStep from '@/components/loan/PhoneStep';
 import PersonalDataStep from '@/components/loan/PersonalDataStep';
 import PaymentMethodStep from '@/components/loan/PaymentMethodStep';
 import DocumentUploadStep from '@/components/loan/DocumentUploadStep';
@@ -53,7 +54,7 @@ export default function Index() {
     }
   }, [showSuccessModal, countdown]);
 
-  const totalSteps = 7;
+  const totalSteps = 8;
   const progressPercent = (step / totalSteps) * 100;
 
   const calculateOverpayment = () => {
@@ -62,7 +63,101 @@ export default function Index() {
     return Math.round(overpayment);
   };
 
+  const validateStep = () => {
+    switch (step) {
+      case 2:
+        if (!formData.phone.trim()) {
+          toast({
+            title: 'Ошибка валидации',
+            description: 'Укажите номер телефона',
+            variant: 'destructive',
+          });
+          return false;
+        }
+        break;
+      case 3:
+        if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.birthDate) {
+          toast({
+            title: 'Ошибка валидации',
+            description: 'Заполните все обязательные поля',
+            variant: 'destructive',
+          });
+          return false;
+        }
+        if (!formData.email.includes('@')) {
+          toast({
+            title: 'Ошибка валидации',
+            description: 'Укажите корректный email',
+            variant: 'destructive',
+          });
+          return false;
+        }
+        break;
+      case 4:
+        if (formData.paymentMethod === 'card' && !formData.cardNumber?.trim()) {
+          toast({
+            title: 'Ошибка валидации',
+            description: 'Укажите номер карты',
+            variant: 'destructive',
+          });
+          return false;
+        }
+        if (formData.paymentMethod === 'sbp' && !formData.phoneForSbp?.trim()) {
+          toast({
+            title: 'Ошибка валидации',
+            description: 'Укажите номер телефона для СБП',
+            variant: 'destructive',
+          });
+          return false;
+        }
+        if (formData.paymentMethod === 'bank' && (!formData.bankAccount?.trim() || !formData.bankName?.trim() || !formData.bankBik?.trim())) {
+          toast({
+            title: 'Ошибка валидации',
+            description: 'Заполните все банковские реквизиты',
+            variant: 'destructive',
+          });
+          return false;
+        }
+        break;
+      case 5:
+        if (!formData.passportPhoto || !formData.cardPhoto) {
+          toast({
+            title: 'Ошибка валидации',
+            description: 'Загрузите все документы',
+            variant: 'destructive',
+          });
+          return false;
+        }
+        break;
+      case 6:
+        if (!formData.regAddress.trim()) {
+          toast({
+            title: 'Ошибка валидации',
+            description: 'Укажите адрес регистрации',
+            variant: 'destructive',
+          });
+          return false;
+        }
+        break;
+      case 7:
+        if (!formData.workplace.trim() || !formData.position.trim() || !formData.monthlyIncome.trim()) {
+          toast({
+            title: 'Ошибка валидации',
+            description: 'Заполните все поля о работе',
+            variant: 'destructive',
+          });
+          return false;
+        }
+        break;
+    }
+    return true;
+  };
+
   const handleNext = async () => {
+    if (!validateStep()) {
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -130,18 +225,20 @@ export default function Index() {
           />
         );
       case 2:
-        return <PersonalDataStep formData={formData} setFormData={setFormData} />;
+        return <PhoneStep formData={formData} setFormData={setFormData} />;
       case 3:
-        return <PaymentMethodStep formData={formData} setFormData={setFormData} />;
+        return <PersonalDataStep formData={formData} setFormData={setFormData} />;
       case 4:
+        return <PaymentMethodStep formData={formData} setFormData={setFormData} />;
+      case 5:
         return (
           <DocumentUploadStep formData={formData} handleFileUpload={handleFileUpload} />
         );
-      case 5:
-        return <AddressStep formData={formData} setFormData={setFormData} />;
       case 6:
-        return <EmploymentStep formData={formData} setFormData={setFormData} />;
+        return <AddressStep formData={formData} setFormData={setFormData} />;
       case 7:
+        return <EmploymentStep formData={formData} setFormData={setFormData} />;
+      case 8:
         return <ReviewStep formData={formData} />;
       default:
         return null;
@@ -149,13 +246,13 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-sky-50 py-4 md:py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-600 py-4 md:py-8 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="mb-4 md:mb-8 text-center px-2">
-          <h1 className="text-2xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <h1 className="text-2xl md:text-4xl font-bold mb-2 text-white drop-shadow-lg">
             Заявка на займ
           </h1>
-          <p className="text-sm md:text-base text-muted-foreground">Быстрое оформление за 5 минут</p>
+          <p className="text-sm md:text-base text-blue-100">Быстрое оформление за 5 минут</p>
         </div>
 
         <Card className="p-4 md:p-6 mb-4 md:mb-6 shadow-lg rounded-3xl">

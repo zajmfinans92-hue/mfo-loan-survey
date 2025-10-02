@@ -59,7 +59,9 @@ export default function PaymentMethodStep({
           {formData.paymentMethod === 'card' && (
             <div className="mt-4 space-y-3">
               <div>
-                <Label className="text-sm">Номер карты</Label>
+                <Label className="text-sm">
+                  Номер карты <span className="text-red-500">*</span>
+                </Label>
                 <Input
                   value={formData.cardNumber || ''}
                   onChange={(e) =>
@@ -68,6 +70,7 @@ export default function PaymentMethodStep({
                   placeholder="0000 0000 0000 0000"
                   className="mt-1.5 h-11 md:h-10 text-base"
                   maxLength={19}
+                  required
                 />
               </div>
             </div>
@@ -101,7 +104,9 @@ export default function PaymentMethodStep({
           {formData.paymentMethod === 'sbp' && (
             <div className="mt-4 space-y-3">
               <div>
-                <Label className="text-sm">Номер телефона для СБП</Label>
+                <Label className="text-sm">
+                  Номер телефона для СБП <span className="text-red-500">*</span>
+                </Label>
                 <Input
                   value={formData.phoneForSbp || ''}
                   onChange={(e) =>
@@ -109,6 +114,7 @@ export default function PaymentMethodStep({
                   }
                   placeholder="+7 (999) 123-45-67"
                   className="mt-1.5 h-11 md:h-10 text-base"
+                  required
                 />
               </div>
             </div>
@@ -142,7 +148,9 @@ export default function PaymentMethodStep({
           {formData.paymentMethod === 'bank' && (
             <div className="mt-4 space-y-3">
               <div>
-                <Label className="text-sm">Номер счёта</Label>
+                <Label className="text-sm">
+                  Номер счёта <span className="text-red-500">*</span>
+                </Label>
                 <Input
                   value={formData.bankAccount || ''}
                   onChange={(e) =>
@@ -151,10 +159,13 @@ export default function PaymentMethodStep({
                   placeholder="40817810099910004312"
                   className="mt-1.5 h-11 md:h-10 text-base"
                   maxLength={20}
+                  required
                 />
               </div>
               <div>
-                <Label className="text-sm">Название банка</Label>
+                <Label className="text-sm">
+                  Название банка <span className="text-red-500">*</span>
+                </Label>
                 <Input
                   value={formData.bankName || ''}
                   onChange={(e) =>
@@ -162,10 +173,13 @@ export default function PaymentMethodStep({
                   }
                   placeholder="ПАО Сбербанк"
                   className="mt-1.5 h-11 md:h-10 text-base"
+                  required
                 />
               </div>
               <div>
-                <Label className="text-sm">БИК банка</Label>
+                <Label className="text-sm">
+                  БИК банка <span className="text-red-500">*</span>
+                </Label>
                 <Input
                   value={formData.bankBik || ''}
                   onChange={(e) =>
@@ -174,6 +188,7 @@ export default function PaymentMethodStep({
                   placeholder="044525225"
                   className="mt-1.5 h-11 md:h-10 text-base"
                   maxLength={9}
+                  required
                 />
               </div>
             </div>

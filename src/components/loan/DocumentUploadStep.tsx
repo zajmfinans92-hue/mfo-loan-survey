@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Loader } from '@/components/ui/loader';
 import Icon from '@/components/ui/icon';
 import { FormData } from './types';
 
@@ -13,6 +15,8 @@ export default function DocumentUploadStep({
   formData,
   handleFileUpload,
 }: DocumentUploadStepProps) {
+  const [uploadingPassport, setUploadingPassport] = useState(false);
+  const [uploadingCard, setUploadingCard] = useState(false);
   return (
     <div className="space-y-4 md:space-y-6 animate-fade-in">
       <div className="text-center space-y-1 md:space-y-2">
@@ -37,17 +41,32 @@ export default function DocumentUploadStep({
             <Input
               type="file"
               accept="image/*"
-              onChange={(e) => {
+              onChange={async (e) => {
                 const file = e.target.files?.[0];
-                if (file) handleFileUpload('passportPhoto', file);
+                if (file) {
+                  setUploadingPassport(true);
+                  await new Promise((resolve) => setTimeout(resolve, 1500));
+                  handleFileUpload('passportPhoto', file);
+                  setUploadingPassport(false);
+                }
               }}
               className="cursor-pointer"
+              disabled={uploadingPassport}
             />
-            {formData.passportPhoto && (
-              <p className="text-sm text-green-600 flex items-center gap-2">
-                <Icon name="CheckCircle2" size={16} />
-                {formData.passportPhoto.name}
-              </p>
+            {uploadingPassport && (
+              <div className="flex items-center gap-2 text-primary animate-fade-in">
+                <Loader size="sm" />
+                <span className="text-sm">Загрузка файла...</span>
+              </div>
+            )}
+            {formData.passportPhoto && !uploadingPassport && (
+              <div className="p-3 bg-green-50 border border-green-200 rounded-lg animate-scale-in">
+                <p className="text-sm text-green-700 flex items-center gap-2 font-medium">
+                  <Icon name="CheckCircle2" size={18} className="text-green-600" />
+                  Успешно загружено
+                </p>
+                <p className="text-xs text-green-600 mt-1 ml-6">{formData.passportPhoto.name}</p>
+              </div>
             )}
           </div>
         </Card>
@@ -66,17 +85,32 @@ export default function DocumentUploadStep({
             <Input
               type="file"
               accept="image/*"
-              onChange={(e) => {
+              onChange={async (e) => {
                 const file = e.target.files?.[0];
-                if (file) handleFileUpload('cardPhoto', file);
+                if (file) {
+                  setUploadingCard(true);
+                  await new Promise((resolve) => setTimeout(resolve, 1500));
+                  handleFileUpload('cardPhoto', file);
+                  setUploadingCard(false);
+                }
               }}
               className="cursor-pointer"
+              disabled={uploadingCard}
             />
-            {formData.cardPhoto && (
-              <p className="text-sm text-green-600 flex items-center gap-2">
-                <Icon name="CheckCircle2" size={16} />
-                {formData.cardPhoto.name}
-              </p>
+            {uploadingCard && (
+              <div className="flex items-center gap-2 text-primary animate-fade-in">
+                <Loader size="sm" />
+                <span className="text-sm">Загрузка файла...</span>
+              </div>
+            )}
+            {formData.cardPhoto && !uploadingCard && (
+              <div className="p-3 bg-green-50 border border-green-200 rounded-lg animate-scale-in">
+                <p className="text-sm text-green-700 flex items-center gap-2 font-medium">
+                  <Icon name="CheckCircle2" size={18} className="text-green-600" />
+                  Успешно загружено
+                </p>
+                <p className="text-xs text-green-600 mt-1 ml-6">{formData.cardPhoto.name}</p>
+              </div>
             )}
           </div>
         </Card>

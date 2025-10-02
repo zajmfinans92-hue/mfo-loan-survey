@@ -22,7 +22,9 @@ export default function EmploymentStep({
 
       <div className="space-y-3 md:space-y-4">
         <div>
-          <Label className="text-sm md:text-base">Место работы</Label>
+          <Label className="text-sm md:text-base">
+            Место работы <span className="text-red-500">*</span>
+          </Label>
           <Input
             value={formData.workplace}
             onChange={(e) =>
@@ -30,10 +32,13 @@ export default function EmploymentStep({
             }
             placeholder="ООО 'Рога и Копыта'"
             className="mt-1.5 h-11 md:h-10 text-base"
+            required
           />
         </div>
         <div>
-          <Label className="text-sm md:text-base">Должность</Label>
+          <Label className="text-sm md:text-base">
+            Должность <span className="text-red-500">*</span>
+          </Label>
           <Input
             value={formData.position}
             onChange={(e) =>
@@ -41,10 +46,13 @@ export default function EmploymentStep({
             }
             placeholder="Менеджер"
             className="mt-1.5 h-11 md:h-10 text-base"
+            required
           />
         </div>
         <div>
-          <Label className="text-sm md:text-base">Ежемесячный доход</Label>
+          <Label className="text-sm md:text-base">
+            Ежемесячный доход <span className="text-red-500">*</span>
+          </Label>
           <Input
             type="number"
             value={formData.monthlyIncome}
@@ -53,6 +61,7 @@ export default function EmploymentStep({
             }
             placeholder="50000"
             className="mt-1.5 h-11 md:h-10 text-base"
+            required
           />
         </div>
       </div>

@@ -22,7 +22,9 @@ export default function AddressStep({
 
       <div className="space-y-3 md:space-y-4">
         <div>
-          <Label className="text-sm md:text-base">Адрес регистрации</Label>
+          <Label className="text-sm md:text-base">
+            Адрес регистрации <span className="text-red-500">*</span>
+          </Label>
           <Input
             value={formData.regAddress}
             onChange={(e) =>
@@ -30,6 +32,7 @@ export default function AddressStep({
             }
             placeholder="г. Москва, ул. Ленина, д. 1, кв. 10"
             className="mt-1.5 h-11 md:h-10 text-base"
+            required
           />
         </div>
 

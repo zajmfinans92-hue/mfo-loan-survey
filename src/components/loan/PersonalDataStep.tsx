@@ -22,7 +22,9 @@ export default function PersonalDataStep({
 
       <div className="space-y-3 md:space-y-4">
         <div>
-          <Label className="text-sm md:text-base">Фамилия</Label>
+          <Label className="text-sm md:text-base">
+            Фамилия <span className="text-red-500">*</span>
+          </Label>
           <Input
             value={formData.lastName}
             onChange={(e) =>
@@ -30,10 +32,13 @@ export default function PersonalDataStep({
             }
             placeholder="Иванов"
             className="mt-1.5 h-11 md:h-10 text-base"
+            required
           />
         </div>
         <div>
-          <Label className="text-sm md:text-base">Имя</Label>
+          <Label className="text-sm md:text-base">
+            Имя <span className="text-red-500">*</span>
+          </Label>
           <Input
             value={formData.firstName}
             onChange={(e) =>
@@ -41,6 +46,7 @@ export default function PersonalDataStep({
             }
             placeholder="Иван"
             className="mt-1.5 h-11 md:h-10 text-base"
+            required
           />
         </div>
         <div>
@@ -55,7 +61,9 @@ export default function PersonalDataStep({
           />
         </div>
         <div>
-          <Label className="text-sm md:text-base">Дата рождения</Label>
+          <Label className="text-sm md:text-base">
+            Дата рождения <span className="text-red-500">*</span>
+          </Label>
           <Input
             type="date"
             value={formData.birthDate}
@@ -63,10 +71,13 @@ export default function PersonalDataStep({
               setFormData({ ...formData, birthDate: e.target.value })
             }
             className="mt-1.5 h-11 md:h-10 text-base"
+            required
           />
         </div>
         <div>
-          <Label className="text-sm md:text-base">Email</Label>
+          <Label className="text-sm md:text-base">
+            Email <span className="text-red-500">*</span>
+          </Label>
           <Input
             type="email"
             value={formData.email}
@@ -75,6 +86,7 @@ export default function PersonalDataStep({
             }
             placeholder="ivan@example.com"
             className="mt-1.5 h-11 md:h-10 text-base"
+            required
           />
         </div>
       </div>
