@@ -12,17 +12,17 @@ export default function PersonalDataStep({
   setFormData,
 }: PersonalDataStepProps) {
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <div className="text-center space-y-1 md:space-y-2">
-        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+    <div className="space-y-5 md:space-y-7 animate-fade-in">
+      <div className="text-center space-y-2">
+        <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary via-blue-600 to-accent bg-clip-text text-transparent">
           Персональные данные
         </h2>
-        <p className="text-sm md:text-base text-muted-foreground">Заполните информацию о себе</p>
+        <p className="text-base md:text-lg text-muted-foreground font-medium">Заполните информацию о себе</p>
       </div>
 
-      <div className="space-y-3 md:space-y-4">
-        <div>
-          <Label className="text-sm md:text-base">
+      <div className="space-y-4 md:space-y-5">
+        <div className="group">
+          <Label className="text-base md:text-lg font-semibold flex items-center gap-1">
             Фамилия <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -31,12 +31,12 @@ export default function PersonalDataStep({
               setFormData({ ...formData, lastName: e.target.value })
             }
             placeholder="Иванов"
-            className="mt-1.5 h-11 md:h-10 text-base"
+            className="mt-2 h-12 md:h-11 text-base border-2 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
             required
           />
         </div>
-        <div>
-          <Label className="text-sm md:text-base">
+        <div className="group">
+          <Label className="text-base md:text-lg font-semibold flex items-center gap-1">
             Имя <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -45,23 +45,23 @@ export default function PersonalDataStep({
               setFormData({ ...formData, firstName: e.target.value })
             }
             placeholder="Иван"
-            className="mt-1.5 h-11 md:h-10 text-base"
+            className="mt-2 h-12 md:h-11 text-base border-2 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
             required
           />
         </div>
-        <div>
-          <Label className="text-sm md:text-base">Отчество</Label>
+        <div className="group">
+          <Label className="text-base md:text-lg font-semibold">Отчество</Label>
           <Input
             value={formData.middleName}
             onChange={(e) =>
               setFormData({ ...formData, middleName: e.target.value })
             }
             placeholder="Иванович"
-            className="mt-1.5 h-11 md:h-10 text-base"
+            className="mt-2 h-12 md:h-11 text-base border-2 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
           />
         </div>
-        <div>
-          <Label className="text-sm md:text-base">
+        <div className="group">
+          <Label className="text-base md:text-lg font-semibold flex items-center gap-1">
             Дата рождения <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -70,12 +70,12 @@ export default function PersonalDataStep({
             onChange={(e) =>
               setFormData({ ...formData, birthDate: e.target.value })
             }
-            className="mt-1.5 h-11 md:h-10 text-base"
+            className="mt-2 h-12 md:h-11 text-base border-2 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
             required
           />
         </div>
-        <div>
-          <Label className="text-sm md:text-base">
+        <div className="group">
+          <Label className="text-base md:text-lg font-semibold flex items-center gap-1">
             Email <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -85,7 +85,7 @@ export default function PersonalDataStep({
               setFormData({ ...formData, email: e.target.value })
             }
             placeholder="ivan@example.com"
-            className="mt-1.5 h-11 md:h-10 text-base"
+            className="mt-2 h-12 md:h-11 text-base border-2 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
             required
           />
         </div>

@@ -287,52 +287,58 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-600 py-4 md:py-8 px-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="mb-4 md:mb-8 text-center px-2">
-          <div className="flex items-center justify-center gap-3 mb-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 py-6 md:py-12 px-4 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2aDRWMGgtNHYxNnptMCA0NGg0di0xNmgtNHYxNnpNMTYgMzZoNHYtNGgtNHY0em00NCAwaDR2LTRoLTR2NHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
+      <div className="max-w-2xl mx-auto relative z-10">
+        <div className="mb-6 md:mb-10 text-center px-2 animate-slide-up">
+          <div className="flex items-center justify-center gap-3 mb-3">
             <img 
               src="https://cdn.poehali.dev/files/8e6a9c1a-a95c-47fa-a912-9ffdc0f5dbea.png" 
               alt="Logo" 
-              className="h-12 md:h-16 w-auto"
+              className="h-14 md:h-20 w-auto drop-shadow-2xl animate-bounce-in"
             />
-            <h1 className="text-2xl md:text-4xl font-bold text-white drop-shadow-lg">
+            <h1 className="text-3xl md:text-5xl font-extrabold text-white drop-shadow-2xl">
               Заявка на займ
             </h1>
           </div>
-          <p className="text-sm md:text-base text-blue-100">Быстрое оформление за 5 минут</p>
+          <p className="text-base md:text-lg text-blue-50 font-medium">Быстрое оформление за 5 минут ⚡</p>
         </div>
 
-        <Card className="p-4 md:p-6 mb-4 md:mb-6 shadow-lg rounded-3xl">
-          <div className="mb-4 md:mb-6">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-xs md:text-sm font-medium text-muted-foreground">
-                Шаг {step} из {totalSteps}
-              </span>
-              <span className="text-xs md:text-sm font-medium text-primary">
+        <Card className="p-6 md:p-8 mb-6 md:mb-8 shadow-2xl rounded-3xl glass-effect border-0 animate-fade-in">
+          <div className="mb-6 md:mb-8">
+            <div className="flex justify-between items-center mb-3">
+              <div>
+                <span className="text-xs md:text-sm font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">
+                  Шаг {step} из {totalSteps}
+                </span>
+              </div>
+              <span className="text-sm md:text-base font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 {Math.round(progressPercent)}%
               </span>
             </div>
-            <Progress value={progressPercent} className="h-1.5 md:h-2" />
+            <Progress value={progressPercent} className="h-2 md:h-2.5" />
           </div>
 
-          <div className="mb-6 md:mb-8">
+          <div className="mb-8 md:mb-10">
             {loading ? (
-              <div className="py-20 flex flex-col items-center gap-4">
+              <div className="py-24 flex flex-col items-center gap-5">
                 <Loader size="lg" />
-                <p className="text-sm text-muted-foreground">Обработка данных...</p>
+                <div className="text-center">
+                  <p className="text-base font-semibold text-foreground mb-1">Обработка данных...</p>
+                  <p className="text-sm text-muted-foreground">Это займёт всего несколько секунд</p>
+                </div>
               </div>
             ) : (
               renderStep()
             )}
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
             {step > 1 && (
               <Button
                 onClick={handlePrev}
                 variant="outline"
-                className="w-full sm:flex-1 h-11 md:h-10"
+                className="w-full sm:flex-1 h-12 md:h-11 text-base font-semibold border-2 hover:bg-muted/50 transition-all"
               >
                 <Icon name="ChevronLeft" size={20} className="mr-2" />
                 Назад
@@ -341,27 +347,27 @@ export default function Index() {
             <Button
               onClick={handleNext}
               disabled={loading}
-              className="w-full sm:flex-1 h-11 md:h-10 bg-gradient-to-r from-primary to-accent hover:opacity-90 disabled:opacity-50"
+              className="w-full sm:flex-1 h-12 md:h-11 text-base font-bold bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 transition-all"
             >
               {loading ? (
                 <Loader size="sm" className="mr-2" />
               ) : null}
-              {step === totalSteps ? 'Отправить заявку' : 'Далее'}
-              {!loading && <Icon name="ChevronRight" size={20} className="ml-2" />}
+              {step === totalSteps ? '✨ Отправить заявку' : 'Продолжить'}
+              {!loading && step < totalSteps && <Icon name="ChevronRight" size={20} className="ml-2" />}
             </Button>
           </div>
         </Card>
 
-        <div className="flex justify-center gap-1.5 md:gap-2 mb-4">
+        <div className="flex justify-center gap-2 md:gap-2.5 mb-6">
           {Array.from({ length: totalSteps }).map((_, i) => (
             <div
               key={i}
-              className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all ${
+              className={`h-2 md:h-2.5 rounded-full transition-all duration-300 ${
                 i + 1 === step
-                  ? 'bg-primary w-6 md:w-8'
+                  ? 'bg-white shadow-lg w-8 md:w-10'
                   : i + 1 < step
-                  ? 'bg-primary/50'
-                  : 'bg-gray-300'
+                  ? 'bg-white/70 w-2 md:w-2.5'
+                  : 'bg-white/30 w-2 md:w-2.5'
               }`}
             />
           ))}
@@ -378,18 +384,20 @@ export default function Index() {
 
       {/* Final Modal */}
       {showFinalModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl animate-fade-in">
-            <div className="text-center space-y-4">
-              <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center animate-scale-in">
-                <Icon name="CheckCircle2" className="text-white" size={40} />
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl p-8 md:p-10 max-w-md w-full shadow-2xl animate-bounce-in">
+            <div className="text-center space-y-6">
+              <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-xl animate-scale-in">
+                <Icon name="CheckCircle2" className="text-white" size={48} />
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Заявка принята!
-              </h2>
-              <p className="text-base md:text-lg text-muted-foreground">
-                Менеджер свяжется с вами в ближайшее время
-              </p>
+              <div className="space-y-3">
+                <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  Заявка принята!
+                </h2>
+                <p className="text-lg md:text-xl text-muted-foreground font-medium">
+                  Менеджер свяжется с вами в ближайшее время
+                </p>
+              </div>
             </div>
           </div>
         </div>
