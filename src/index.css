@@ -197,12 +197,3 @@
     mask-composite: exclude;
   }
 }
-
-jivo-iframe {
-  transform: scale(0.85);
-  transform-origin: bottom right;
-}
-
-jivo-iframe[data-state="opened"] {
-  transform: scale(0.9);
-}
