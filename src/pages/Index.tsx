@@ -15,6 +15,7 @@ import AddressStep from '@/components/loan/AddressStep';
 import EmploymentStep from '@/components/loan/EmploymentStep';
 import ReviewStep from '@/components/loan/ReviewStep';
 import SuccessModal from '@/components/loan/SuccessModal';
+import PrivacyPolicyModal from '@/components/loan/PrivacyPolicyModal';
 
 export default function Index() {
   const [step, setStep] = useState(1);
@@ -42,6 +43,8 @@ export default function Index() {
   const [countdown, setCountdown] = useState(60);
   const [loading, setLoading] = useState(false);
   const [showFinalModal, setShowFinalModal] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -63,6 +66,14 @@ export default function Index() {
     return Math.round(overpayment);
   };
 
+  const handlePrivacyAccept = () => {
+    setPrivacyAccepted(true);
+    toast({
+      title: '✅ Согласие принято',
+      description: 'Вы приняли соглашение на обработку персональных данных',
+    });
+  };
+
   const validateStep = () => {
     switch (step) {
       case 2:
@@ -72,6 +83,10 @@ export default function Index() {
             description: 'Укажите номер телефона',
             variant: 'destructive',
           });
+          return false;
+        }
+        if (!privacyAccepted) {
+          setShowPrivacyModal(true);
           return false;
         }
         break;
@@ -380,6 +395,12 @@ export default function Index() {
         countdown={countdown}
         formData={formData}
         onClose={handleCloseModal}
+      />
+
+      <PrivacyPolicyModal
+        open={showPrivacyModal}
+        onOpenChange={setShowPrivacyModal}
+        onAccept={handlePrivacyAccept}
       />
 
       {/* Final Modal */}
