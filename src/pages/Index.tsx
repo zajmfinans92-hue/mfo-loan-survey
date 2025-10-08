@@ -81,10 +81,22 @@ export default function Index() {
       />
 
       <LegalFooter
-        onOpenOferta={() => setShowOfertaModal(true)}
-        onOpenPrivacy={() => setShowPrivacyDocModal(true)}
-        onOpenRefund={() => setShowRefundModal(true)}
-        onOpenContacts={() => setShowContactsModal(true)}
+        onOpenOferta={() => {
+          console.log('Setting Oferta modal to true');
+          setShowOfertaModal(true);
+        }}
+        onOpenPrivacy={() => {
+          console.log('Setting Privacy modal to true');
+          setShowPrivacyDocModal(true);
+        }}
+        onOpenRefund={() => {
+          console.log('Setting Refund modal to true');
+          setShowRefundModal(true);
+        }}
+        onOpenContacts={() => {
+          console.log('Setting Contacts modal to true');
+          setShowContactsModal(true);
+        }}
       />
 
       <LegalModals

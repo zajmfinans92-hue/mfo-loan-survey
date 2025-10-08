@@ -33,6 +33,13 @@ const LegalModals = ({
   onDownloadRefund,
   onDownloadContacts,
 }: LegalModalsProps) => {
+  console.log('LegalModals render:', {
+    showOfertaModal,
+    showPrivacyDocModal,
+    showRefundModal,
+    showContactsModal,
+  });
+
   return (
     <>
       <LegalModal 
