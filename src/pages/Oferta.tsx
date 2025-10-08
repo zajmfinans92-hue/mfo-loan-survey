@@ -110,7 +110,8 @@ const Oferta = () => {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">8. Реквизиты исполнителя</h2>
             <p>
-              <strong>Самозанятый:</strong> Малик Степан Владимирович<br />
+              <strong>Статус:</strong> Самозанятый<br />
+              <strong>ФИО:</strong> Малик Степан Владимирович<br />
               <strong>ИНН:</strong> 503303222876
             </p>
           </section>

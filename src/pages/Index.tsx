@@ -409,31 +409,35 @@ export default function Index() {
         <div className="flex flex-wrap justify-center gap-3 md:gap-6 text-xs md:text-sm">
           <Link 
             to="/oferta"
-            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4"
+            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4 inline-flex items-center gap-1"
           >
+            <Icon name="FileText" size={14} />
             Договор оферты
           </Link>
           <Link 
             to="/privacy"
-            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4"
+            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4 inline-flex items-center gap-1"
           >
+            <Icon name="Shield" size={14} />
             Политика конфиденциальности
           </Link>
           <Link 
             to="/refund"
-            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4"
+            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4 inline-flex items-center gap-1"
           >
+            <Icon name="Banknote" size={14} />
             Условия возврата
           </Link>
           <Link 
             to="/contacts"
-            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4"
+            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4 inline-flex items-center gap-1"
           >
+            <Icon name="Phone" size={14} />
             Контакты
           </Link>
         </div>
         <p className="text-white/60 text-xs md:text-sm">
-          ИП Малик Степан Владимирович, ИНН: 503303222876
+          Самозанятый: Малик Степан Владимирович, ИНН: 503303222876
         </p>
       </div>
 
