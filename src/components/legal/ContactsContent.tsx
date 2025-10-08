@@ -56,10 +56,10 @@ const ContactsContent = () => {
           </CardHeader>
           <CardContent>
             <a
-              href="tel:+79001234567"
+              href="tel:+74952733828"
               className="text-blue-600 hover:underline font-semibold text-lg"
             >
-              +7 (900) 123-45-67
+              +7 (495) 273-38-28
             </a>
             <p className="text-sm text-gray-600 mt-2">
               Пн-Пт: 9:00 - 18:00 (МСК)
