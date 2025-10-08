@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -17,6 +16,11 @@ import EmploymentStep from '@/components/loan/EmploymentStep';
 import ReviewStep from '@/components/loan/ReviewStep';
 import SuccessModal from '@/components/loan/SuccessModal';
 import PrivacyPolicyModal from '@/components/loan/PrivacyPolicyModal';
+import LegalModal from '@/components/legal/LegalModal';
+import OfertaContent from '@/components/legal/OfertaContent';
+import PrivacyContent from '@/components/legal/PrivacyContent';
+import RefundContent from '@/components/legal/RefundContent';
+import ContactsContent from '@/components/legal/ContactsContent';
 
 export default function Index() {
   const [step, setStep] = useState(1);
@@ -46,6 +50,10 @@ export default function Index() {
   const [showFinalModal, setShowFinalModal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [showOfertaModal, setShowOfertaModal] = useState(false);
+  const [showPrivacyDocModal, setShowPrivacyDocModal] = useState(false);
+  const [showRefundModal, setShowRefundModal] = useState(false);
+  const [showContactsModal, setShowContactsModal] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -407,39 +415,56 @@ export default function Index() {
       {/* Footer Links */}
       <div className="max-w-2xl mx-auto mt-8 text-center space-y-2">
         <div className="flex flex-wrap justify-center gap-3 md:gap-6 text-xs md:text-sm">
-          <Link 
-            to="/oferta"
-            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4 inline-flex items-center gap-1"
+          <button 
+            onClick={() => setShowOfertaModal(true)}
+            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4 inline-flex items-center gap-1 cursor-pointer"
           >
             <Icon name="FileText" size={14} />
             Договор оферты
-          </Link>
-          <Link 
-            to="/privacy"
-            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4 inline-flex items-center gap-1"
+          </button>
+          <button 
+            onClick={() => setShowPrivacyDocModal(true)}
+            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4 inline-flex items-center gap-1 cursor-pointer"
           >
             <Icon name="Shield" size={14} />
             Политика конфиденциальности
-          </Link>
-          <Link 
-            to="/refund"
-            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4 inline-flex items-center gap-1"
+          </button>
+          <button 
+            onClick={() => setShowRefundModal(true)}
+            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4 inline-flex items-center gap-1 cursor-pointer"
           >
             <Icon name="Banknote" size={14} />
             Условия возврата
-          </Link>
-          <Link 
-            to="/contacts"
-            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4 inline-flex items-center gap-1"
+          </button>
+          <button 
+            onClick={() => setShowContactsModal(true)}
+            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4 inline-flex items-center gap-1 cursor-pointer"
           >
             <Icon name="Phone" size={14} />
             Контакты
-          </Link>
+          </button>
         </div>
         <p className="text-white/60 text-xs md:text-sm">
           Самозанятый: Малик Степан Владимирович, ИНН: 503303222876
         </p>
       </div>
+
+      {/* Legal Modals */}
+      <LegalModal open={showOfertaModal} onOpenChange={setShowOfertaModal} title="Договор оферты">
+        <OfertaContent />
+      </LegalModal>
+
+      <LegalModal open={showPrivacyDocModal} onOpenChange={setShowPrivacyDocModal} title="Политика обработки персональных данных">
+        <PrivacyContent />
+      </LegalModal>
+
+      <LegalModal open={showRefundModal} onOpenChange={setShowRefundModal} title="Условия возврата и отмены платежа">
+        <RefundContent />
+      </LegalModal>
+
+      <LegalModal open={showContactsModal} onOpenChange={setShowContactsModal} title="Контактная информация">
+        <ContactsContent />
+      </LegalModal>
 
       {/* Final Modal */}
       {showFinalModal && (
