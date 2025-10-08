@@ -306,11 +306,11 @@ export default function Index() {
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2aDRWMGgtNHYxNnptMCA0NGg0di0xNmgtNHYxNnpNMTYgMzZoNHYtNGgtNHY0em00NCAwaDR2LTRoLTR2NHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
       <div className="max-w-2xl mx-auto relative z-10">
         <div className="mb-4 md:mb-10 text-center px-1 md:px-2 animate-slide-up">
-          <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-3">
+          <div className="flex flex-col items-center gap-3 md:gap-4 mb-2 md:mb-3">
             <img 
               src="https://cdn.poehali.dev/files/8e6a9c1a-a95c-47fa-a912-9ffdc0f5dbea.png" 
               alt="Logo" 
-              className="h-10 md:h-20 w-auto drop-shadow-2xl animate-bounce-in"
+              className="h-16 md:h-24 w-auto drop-shadow-2xl animate-bounce-in"
             />
             <h1 className="text-2xl md:text-5xl font-extrabold text-white drop-shadow-2xl">
               Заявка на займ
