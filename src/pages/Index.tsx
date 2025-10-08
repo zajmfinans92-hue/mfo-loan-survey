@@ -406,16 +406,36 @@ export default function Index() {
       {/* Footer Links */}
       <div className="max-w-2xl mx-auto mt-8 text-center space-y-2">
         <div className="flex flex-wrap justify-center gap-3 md:gap-6 text-xs md:text-sm">
-          <a href="/oferta" className="text-white/80 hover:text-white transition-colors underline">
+          <a 
+            href="/oferta" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4"
+          >
             Договор оферты
           </a>
-          <a href="/privacy" className="text-white/80 hover:text-white transition-colors underline">
+          <a 
+            href="/privacy" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4"
+          >
             Политика конфиденциальности
           </a>
-          <a href="/refund" className="text-white/80 hover:text-white transition-colors underline">
+          <a 
+            href="/refund" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4"
+          >
             Условия возврата
           </a>
-          <a href="/contacts" className="text-white/80 hover:text-white transition-colors underline">
+          <a 
+            href="/contacts" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-white/80 hover:text-white transition-colors underline hover:underline-offset-4"
+          >
             Контакты
           </a>
         </div>
