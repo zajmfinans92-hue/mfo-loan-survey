@@ -403,6 +403,27 @@ export default function Index() {
         onAccept={handlePrivacyAccept}
       />
 
+      {/* Footer Links */}
+      <div className="max-w-2xl mx-auto mt-8 text-center space-y-2">
+        <div className="flex flex-wrap justify-center gap-3 md:gap-6 text-xs md:text-sm">
+          <a href="/oferta" className="text-white/80 hover:text-white transition-colors underline">
+            Договор оферты
+          </a>
+          <a href="/privacy" className="text-white/80 hover:text-white transition-colors underline">
+            Политика конфиденциальности
+          </a>
+          <a href="/refund" className="text-white/80 hover:text-white transition-colors underline">
+            Условия возврата
+          </a>
+          <a href="/contacts" className="text-white/80 hover:text-white transition-colors underline">
+            Контакты
+          </a>
+        </div>
+        <p className="text-white/60 text-xs md:text-sm">
+          ИП Малик Степан Владимирович, ИНН: 503303222876
+        </p>
+      </div>
+
       {/* Final Modal */}
       {showFinalModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
