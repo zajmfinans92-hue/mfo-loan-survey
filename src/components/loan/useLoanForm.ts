@@ -34,6 +34,7 @@ export const useLoanForm = () => {
   const [showPrivacyDocModal, setShowPrivacyDocModal] = useState(false);
   const [showRefundModal, setShowRefundModal] = useState(false);
   const [showContactsModal, setShowContactsModal] = useState(false);
+  const [showDocumentsModal, setShowDocumentsModal] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -211,8 +212,12 @@ export const useLoanForm = () => {
 
         console.log('amoCRM success:', result);
 
-        setCountdown(60);
-        setShowSuccessModal(true);
+        setShowDocumentsModal(true);
+        
+        setTimeout(() => {
+          setCountdown(60);
+          setShowSuccessModal(true);
+        }, 1000);
       }
     } catch (error) {
       toast({
@@ -236,6 +241,7 @@ export const useLoanForm = () => {
   const handleCloseModal = () => {
     setShowSuccessModal(false);
     setShowFinalModal(false);
+    setShowDocumentsModal(false);
     setStep(1);
     setCountdown(60);
     setFormData({
@@ -279,6 +285,8 @@ export const useLoanForm = () => {
     setShowRefundModal,
     showContactsModal,
     setShowContactsModal,
+    showDocumentsModal,
+    setShowDocumentsModal,
     totalSteps,
     progressPercent,
     calculateOverpayment,

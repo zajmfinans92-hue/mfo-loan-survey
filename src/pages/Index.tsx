@@ -7,6 +7,7 @@ import PrivacyPolicyModal from '@/components/loan/PrivacyPolicyModal';
 import LegalFooter from '@/components/loan/LegalFooter';
 import LegalModals from '@/components/loan/LegalModals';
 import FinalModal from '@/components/loan/FinalModal';
+import DocumentsModal from '@/components/loan/DocumentsModal';
 
 export default function Index() {
   const {
@@ -28,6 +29,8 @@ export default function Index() {
     setShowRefundModal,
     showContactsModal,
     setShowContactsModal,
+    showDocumentsModal,
+    setShowDocumentsModal,
     totalSteps,
     progressPercent,
     calculateOverpayment,
@@ -115,6 +118,12 @@ export default function Index() {
       />
 
       <FinalModal show={showFinalModal} />
+
+      <DocumentsModal
+        open={showDocumentsModal}
+        onOpenChange={setShowDocumentsModal}
+        formData={formData}
+      />
     </div>
   );
 }

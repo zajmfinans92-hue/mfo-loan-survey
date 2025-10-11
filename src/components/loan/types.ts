@@ -22,4 +22,6 @@ export type FormData = {
   bankAccount?: string;
   bankName?: string;
   bankBik?: string;
+  passportSeries?: string;
+  passportNumber?: string;
 };
