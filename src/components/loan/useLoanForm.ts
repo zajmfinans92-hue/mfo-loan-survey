@@ -172,6 +172,7 @@ export const useLoanForm = () => {
 
       if (step < totalSteps) {
         setStep(step + 1);
+        setLoading(false);
       } else {
         console.log('Проверка ФССП...');
         
@@ -193,6 +194,7 @@ export const useLoanForm = () => {
         if (fsspResult.hasHighDebt) {
           console.log('High debt detected:', fsspResult.totalDebt);
           setDebtAmount(fsspResult.totalDebt);
+          setLoading(false);
           setShowRejectionModal(true);
           return;
         }
@@ -238,6 +240,7 @@ export const useLoanForm = () => {
 
         console.log('amoCRM success:', result);
 
+        setLoading(false);
         setShowDocumentsModal(true);
         
         setTimeout(() => {
@@ -246,13 +249,13 @@ export const useLoanForm = () => {
         }, 1000);
       }
     } catch (error) {
+      console.error('Error in handleNext:', error);
+      setLoading(false);
       toast({
         title: 'Ошибка',
         description: 'Произошла ошибка при отправке заявки. Попробуйте снова.',
         variant: 'destructive',
       });
-    } finally {
-      setLoading(false);
     }
   };
 
