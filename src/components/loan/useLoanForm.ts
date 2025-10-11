@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { FormData } from './types';
 
@@ -41,14 +41,16 @@ export const useLoanForm = () => {
   const [debtAmount, setDebtAmount] = useState(0);
   const { toast } = useToast();
 
+  const showSuccessModal = modals.showSuccessModal;
+  
   useEffect(() => {
-    if (modals.showSuccessModal && countdown > 0) {
+    if (showSuccessModal && countdown > 0) {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (modals.showSuccessModal && countdown === 0) {
+    } else if (showSuccessModal && countdown === 0) {
       setModals(prev => ({ ...prev, showSuccessModal: false, showFinalModal: true }));
     }
-  }, [modals.showSuccessModal, countdown]);
+  }, [showSuccessModal, countdown]);
 
   const totalSteps = 8;
   const progressPercent = (step / totalSteps) * 100;
@@ -304,30 +306,62 @@ export const useLoanForm = () => {
     });
   };
 
+  const setShowSuccessModal = useCallback((show: boolean) => {
+    setModals(prev => ({ ...prev, showSuccessModal: show }));
+  }, []);
+
+  const setShowPrivacyModal = useCallback((show: boolean) => {
+    setModals(prev => ({ ...prev, showPrivacyModal: show }));
+  }, []);
+
+  const setShowOfertaModal = useCallback((show: boolean) => {
+    setModals(prev => ({ ...prev, showOfertaModal: show }));
+  }, []);
+
+  const setShowPrivacyDocModal = useCallback((show: boolean) => {
+    setModals(prev => ({ ...prev, showPrivacyDocModal: show }));
+  }, []);
+
+  const setShowRefundModal = useCallback((show: boolean) => {
+    setModals(prev => ({ ...prev, showRefundModal: show }));
+  }, []);
+
+  const setShowContactsModal = useCallback((show: boolean) => {
+    setModals(prev => ({ ...prev, showContactsModal: show }));
+  }, []);
+
+  const setShowDocumentsModal = useCallback((show: boolean) => {
+    setModals(prev => ({ ...prev, showDocumentsModal: show }));
+  }, []);
+
+  const setShowRejectionModal = useCallback((show: boolean) => {
+    setModals(prev => ({ ...prev, showRejectionModal: show }));
+  }, []);
+
   return {
     step,
     formData,
     setFormData,
-    showSuccessModal: modals.showSuccessModal,
-    setShowSuccessModal: (show: boolean) => setModals(prev => ({ ...prev, showSuccessModal: show })),
+    showSuccessModal,
+    setShowSuccessModal,
     countdown,
     loading,
     showFinalModal: modals.showFinalModal,
     showPrivacyModal: modals.showPrivacyModal,
-    setShowPrivacyModal: (show: boolean) => setModals(prev => ({ ...prev, showPrivacyModal: show })),
+    setShowPrivacyModal,
     privacyAccepted,
     showOfertaModal: modals.showOfertaModal,
-    setShowOfertaModal: (show: boolean) => setModals(prev => ({ ...prev, showOfertaModal: show })),
+    setShowOfertaModal,
     showPrivacyDocModal: modals.showPrivacyDocModal,
-    setShowPrivacyDocModal: (show: boolean) => setModals(prev => ({ ...prev, showPrivacyDocModal: show })),
+    setShowPrivacyDocModal,
     showRefundModal: modals.showRefundModal,
-    setShowRefundModal: (show: boolean) => setModals(prev => ({ ...prev, showRefundModal: show })),
+    setShowRefundModal,
     showContactsModal: modals.showContactsModal,
-    setShowContactsModal: (show: boolean) => setModals(prev => ({ ...prev, showContactsModal: show })),
+    setShowContactsModal,
     showDocumentsModal: modals.showDocumentsModal,
-    setShowDocumentsModal: (show: boolean) => setModals(prev => ({ ...prev, showDocumentsModal: show })),
+    setShowDocumentsModal,
     showRejectionModal: modals.showRejectionModal,
-    setShowRejectionModal: (show: boolean) => setModals(prev => ({ ...prev, showRejectionModal: show })),
+    setShowRejectionModal,
     debtAmount,
     totalSteps,
     progressPercent,
