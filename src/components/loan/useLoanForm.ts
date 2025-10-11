@@ -35,6 +35,8 @@ export const useLoanForm = () => {
   const [showRefundModal, setShowRefundModal] = useState(false);
   const [showContactsModal, setShowContactsModal] = useState(false);
   const [showDocumentsModal, setShowDocumentsModal] = useState(false);
+  const [showRejectionModal, setShowRejectionModal] = useState(false);
+  const [debtAmount, setDebtAmount] = useState(0);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -171,6 +173,30 @@ export const useLoanForm = () => {
       if (step < totalSteps) {
         setStep(step + 1);
       } else {
+        console.log('Проверка ФССП...');
+        
+        const fsspResponse = await fetch('https://functions.poehali.dev/f3fcc085-c4a5-4d2f-905b-167fd2247512', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            birthDate: formData.birthDate,
+          }),
+        });
+
+        const fsspResult = await fsspResponse.json();
+        console.log('FSSP check result:', fsspResult);
+
+        if (fsspResult.hasHighDebt) {
+          console.log('High debt detected:', fsspResult.totalDebt);
+          setDebtAmount(fsspResult.totalDebt);
+          setShowRejectionModal(true);
+          return;
+        }
+
         console.log('Отправка заявки...', formData);
 
         const response = await fetch('https://functions.poehali.dev/a4773c44-5fde-4ea6-a5c8-d5722c946089', {
@@ -242,8 +268,10 @@ export const useLoanForm = () => {
     setShowSuccessModal(false);
     setShowFinalModal(false);
     setShowDocumentsModal(false);
+    setShowRejectionModal(false);
     setStep(1);
     setCountdown(60);
+    setDebtAmount(0);
     setFormData({
       loanAmount: 10000,
       loanTerm: 14,
@@ -287,6 +315,9 @@ export const useLoanForm = () => {
     setShowContactsModal,
     showDocumentsModal,
     setShowDocumentsModal,
+    showRejectionModal,
+    setShowRejectionModal,
+    debtAmount,
     totalSteps,
     progressPercent,
     calculateOverpayment,
