@@ -24,30 +24,31 @@ export const useLoanForm = () => {
     paymentMethod: 'card',
   });
 
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [modals, setModals] = useState({
+    showSuccessModal: false,
+    showFinalModal: false,
+    showPrivacyModal: false,
+    showOfertaModal: false,
+    showPrivacyDocModal: false,
+    showRefundModal: false,
+    showContactsModal: false,
+    showDocumentsModal: false,
+    showRejectionModal: false,
+  });
   const [countdown, setCountdown] = useState(60);
   const [loading, setLoading] = useState(false);
-  const [showFinalModal, setShowFinalModal] = useState(false);
-  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
-  const [showOfertaModal, setShowOfertaModal] = useState(false);
-  const [showPrivacyDocModal, setShowPrivacyDocModal] = useState(false);
-  const [showRefundModal, setShowRefundModal] = useState(false);
-  const [showContactsModal, setShowContactsModal] = useState(false);
-  const [showDocumentsModal, setShowDocumentsModal] = useState(false);
-  const [showRejectionModal, setShowRejectionModal] = useState(false);
   const [debtAmount, setDebtAmount] = useState(0);
   const { toast } = useToast();
 
   useEffect(() => {
-    if (showSuccessModal && countdown > 0) {
+    if (modals.showSuccessModal && countdown > 0) {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (showSuccessModal && countdown === 0) {
-      setShowSuccessModal(false);
-      setShowFinalModal(true);
+    } else if (modals.showSuccessModal && countdown === 0) {
+      setModals(prev => ({ ...prev, showSuccessModal: false, showFinalModal: true }));
     }
-  }, [showSuccessModal, countdown]);
+  }, [modals.showSuccessModal, countdown]);
 
   const totalSteps = 8;
   const progressPercent = (step / totalSteps) * 100;
@@ -78,7 +79,7 @@ export const useLoanForm = () => {
           return false;
         }
         if (!privacyAccepted) {
-          setShowPrivacyModal(true);
+          setModals(prev => ({ ...prev, showPrivacyModal: true }));
           return false;
         }
         break;
@@ -195,7 +196,7 @@ export const useLoanForm = () => {
           console.log('High debt detected:', fsspResult.totalDebt);
           setDebtAmount(fsspResult.totalDebt);
           setLoading(false);
-          setShowRejectionModal(true);
+          setModals(prev => ({ ...prev, showRejectionModal: true }));
           return;
         }
 
@@ -241,11 +242,11 @@ export const useLoanForm = () => {
         console.log('amoCRM success:', result);
 
         setLoading(false);
-        setShowDocumentsModal(true);
+        setModals(prev => ({ ...prev, showDocumentsModal: true }));
         
         setTimeout(() => {
           setCountdown(60);
-          setShowSuccessModal(true);
+          setModals(prev => ({ ...prev, showSuccessModal: true }));
         }, 1000);
       }
     } catch (error) {
@@ -268,10 +269,17 @@ export const useLoanForm = () => {
   };
 
   const handleCloseModal = () => {
-    setShowSuccessModal(false);
-    setShowFinalModal(false);
-    setShowDocumentsModal(false);
-    setShowRejectionModal(false);
+    setModals({
+      showSuccessModal: false,
+      showFinalModal: false,
+      showPrivacyModal: false,
+      showOfertaModal: false,
+      showPrivacyDocModal: false,
+      showRefundModal: false,
+      showContactsModal: false,
+      showDocumentsModal: false,
+      showRejectionModal: false,
+    });
     setStep(1);
     setCountdown(60);
     setDebtAmount(0);
@@ -300,26 +308,26 @@ export const useLoanForm = () => {
     step,
     formData,
     setFormData,
-    showSuccessModal,
-    setShowSuccessModal,
+    showSuccessModal: modals.showSuccessModal,
+    setShowSuccessModal: (show: boolean) => setModals(prev => ({ ...prev, showSuccessModal: show })),
     countdown,
     loading,
-    showFinalModal,
-    showPrivacyModal,
-    setShowPrivacyModal,
+    showFinalModal: modals.showFinalModal,
+    showPrivacyModal: modals.showPrivacyModal,
+    setShowPrivacyModal: (show: boolean) => setModals(prev => ({ ...prev, showPrivacyModal: show })),
     privacyAccepted,
-    showOfertaModal,
-    setShowOfertaModal,
-    showPrivacyDocModal,
-    setShowPrivacyDocModal,
-    showRefundModal,
-    setShowRefundModal,
-    showContactsModal,
-    setShowContactsModal,
-    showDocumentsModal,
-    setShowDocumentsModal,
-    showRejectionModal,
-    setShowRejectionModal,
+    showOfertaModal: modals.showOfertaModal,
+    setShowOfertaModal: (show: boolean) => setModals(prev => ({ ...prev, showOfertaModal: show })),
+    showPrivacyDocModal: modals.showPrivacyDocModal,
+    setShowPrivacyDocModal: (show: boolean) => setModals(prev => ({ ...prev, showPrivacyDocModal: show })),
+    showRefundModal: modals.showRefundModal,
+    setShowRefundModal: (show: boolean) => setModals(prev => ({ ...prev, showRefundModal: show })),
+    showContactsModal: modals.showContactsModal,
+    setShowContactsModal: (show: boolean) => setModals(prev => ({ ...prev, showContactsModal: show })),
+    showDocumentsModal: modals.showDocumentsModal,
+    setShowDocumentsModal: (show: boolean) => setModals(prev => ({ ...prev, showDocumentsModal: show })),
+    showRejectionModal: modals.showRejectionModal,
+    setShowRejectionModal: (show: boolean) => setModals(prev => ({ ...prev, showRejectionModal: show })),
     debtAmount,
     totalSteps,
     progressPercent,
