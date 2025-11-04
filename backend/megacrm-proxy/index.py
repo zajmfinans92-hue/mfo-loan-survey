@@ -35,47 +35,32 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     
     body_data = json.loads(event.get('body', '{}'))
     
-    form_fields = []
-    
-    if body_data.get('name'):
-        form_fields.append({
-            'name': 'name',
-            'value': body_data['name']
-        })
-    
-    if body_data.get('phone'):
-        form_fields.append({
-            'name': 'phone',
-            'value': body_data['phone']
-        })
-    
-    if body_data.get('email'):
-        form_fields.append({
-            'name': 'email',
-            'value': body_data['email']
-        })
-    
-    if body_data.get('comment'):
-        form_fields.append({
-            'name': 'comment',
-            'value': body_data['comment']
-        })
-    
-    payload = {
-        'hash': 'gqkx8mmfpd74ezm2',
-        'fields': form_fields
+    form_data = {
+        'hash': 'gqkx8mmfpd74ezm2'
     }
     
-    print(f'📤 Отправка заявки в MegaCRM')
-    print(f'   Данные: {json.dumps(payload, ensure_ascii=False)}')
+    if body_data.get('name'):
+        form_data['field_name'] = body_data['name']
     
-    json_data = json.dumps(payload)
+    if body_data.get('phone'):
+        form_data['field_phone'] = body_data['phone']
+    
+    if body_data.get('email'):
+        form_data['field_email'] = body_data['email']
+    
+    if body_data.get('comment'):
+        form_data['field_comment'] = body_data['comment']
+    
+    print(f'📤 Отправка заявки в MegaCRM')
+    print(f'   Данные: {json.dumps(form_data, ensure_ascii=False)}')
+    
+    params = urllib.parse.urlencode(form_data)
     
     conn = http.client.HTTPSConnection('cp.megacrm.ru')
-    conn.request('POST', '/forms/handler.php', body=json_data, headers={
-        'Content-Type': 'application/json',
+    conn.request('GET', f'/forms/handler.php?{params}', headers={
         'User-Agent': 'Mozilla/5.0',
-        'Accept': 'application/json'
+        'Accept': '*/*',
+        'Referer': 'https://cp.megacrm.ru/'
     })
     
     response = conn.getresponse()
