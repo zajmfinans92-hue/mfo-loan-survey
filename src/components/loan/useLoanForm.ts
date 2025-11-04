@@ -198,31 +198,6 @@ export const useLoanForm = () => {
         setStep(step + 1);
         setLoading(false);
       } else {
-        console.log('Проверка ФССП...');
-        
-        const fsspResponse = await fetch('https://functions.poehali.dev/f3fcc085-c4a5-4d2f-905b-167fd2247512', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            birthDate: formData.birthDate,
-          }),
-        });
-
-        const fsspResult = await fsspResponse.json();
-        console.log('FSSP check result:', fsspResult);
-
-        if (fsspResult.hasHighDebt) {
-          console.log('High debt detected:', fsspResult.totalDebt);
-          setDebtAmount(fsspResult.totalDebt);
-          setLoading(false);
-          setModals(prev => ({ ...prev, showRejectionModal: true }));
-          return;
-        }
-
         console.log('Заявка отправлена:', formData);
 
         try {

@@ -30,21 +30,21 @@ export default function SuccessModal({
       };
     } else if (countdown > 60) {
       return {
-        text: 'Проверка в базе ФССП',
+        text: 'Проверка документов',
         icon: 'Shield' as const,
         color: 'text-orange-600',
         bgColor: 'bg-orange-50',
       };
     } else if (countdown > 30) {
       return {
-        text: 'Анализ кредитного рейтинга',
+        text: 'Анализ платежеспособности',
         icon: 'TrendingUp' as const,
         color: 'text-green-600',
         bgColor: 'bg-green-50',
       };
     } else {
       return {
-        text: 'Подготовка документов',
+        text: 'Подготовка договора',
         icon: 'FileCheck' as const,
         color: 'text-purple-600',
         bgColor: 'bg-purple-50',
