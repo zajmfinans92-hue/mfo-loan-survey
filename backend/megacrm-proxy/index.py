@@ -45,6 +45,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     }
     
     params = urllib.parse.urlencode(form_data)
+    print(f'Отправка в MegaCRM: {params}')
     
     conn = http.client.HTTPSConnection('cp.megacrm.ru')
     conn.request('GET', f'/forms/handler.php?{params}', headers={
@@ -52,7 +53,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         'Accept': '*/*'
     })
     response = conn.getresponse()
+    response_body = response.read().decode('utf-8')
+    response_status = response.status
     conn.close()
+    
+    print(f'Ответ MegaCRM: status={response_status}, body={response_body}')
     
     return {
         'statusCode': 200,
@@ -61,5 +66,10 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'Access-Control-Allow-Origin': '*'
         },
         'isBase64Encoded': False,
-        'body': json.dumps({'success': True, 'message': 'Заявка отправлена в MegaCRM'})
+        'body': json.dumps({
+            'success': True, 
+            'message': 'Заявка отправлена в MegaCRM',
+            'megacrm_status': response_status,
+            'megacrm_response': response_body
+        })
     }
