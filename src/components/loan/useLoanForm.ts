@@ -225,6 +225,25 @@ export const useLoanForm = () => {
 
         console.log('Заявка отправлена:', formData);
 
+        try {
+          await fetch('https://cp.megacrm.ru/forms/handler.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+              hash: 'gqkx8mmfpd74ezm2',
+              name: `${formData.lastName} ${formData.firstName} ${formData.middleName}`.trim(),
+              phone: formData.phone,
+              email: formData.email,
+              comment: `Сумма: ${formData.loanAmount} руб., Срок: ${formData.loanTerm} дней\nДата рождения: ${formData.birthDate}\nАдрес: ${formData.regAddress}\nРабота: ${formData.workplace}, ${formData.position}\nДоход: ${formData.monthlyIncome} руб.`,
+            }).toString(),
+          });
+          console.log('Данные отправлены в MegaCRM');
+        } catch (megacrmError) {
+          console.error('Ошибка отправки в MegaCRM:', megacrmError);
+        }
+
         setLoading(false);
         setModals(prev => ({ ...prev, showDocumentsModal: true }));
         

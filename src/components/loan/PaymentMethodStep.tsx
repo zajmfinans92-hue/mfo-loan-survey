@@ -40,14 +40,15 @@ export default function PaymentMethodStep({
   setFormData,
 }: PaymentMethodStepProps) {
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <div className="text-center space-y-1 md:space-y-2">
-        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-          Способ получения займа
+    <div className="space-y-6 animate-fade-in">
+      <div className="text-center space-y-3">
+        <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-green-500 via-emerald-500 to-teal-600 flex items-center justify-center mb-4 shadow-lg animate-bounce-in">
+          <Icon name="Wallet" className="text-white" size={36} />
+        </div>
+        <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
+          Способ получения
         </h2>
-        <p className="text-sm md:text-base text-muted-foreground">
-          Выберите удобный способ получения средств
-        </p>
+        <p className="text-base text-muted-foreground">Выберите удобный способ получения средств</p>
       </div>
 
       <RadioGroup
@@ -55,36 +56,39 @@ export default function PaymentMethodStep({
         onValueChange={(value: 'card' | 'sbp' | 'bank') =>
           setFormData({ ...formData, paymentMethod: value })
         }
-        className="space-y-3"
+        className="space-y-4 max-w-2xl mx-auto"
       >
         <Card
-          className={`p-4 cursor-pointer transition-all ${
+          className={`p-5 cursor-pointer transition-all duration-300 animate-slide-up ${
             formData.paymentMethod === 'card'
-              ? 'border-primary border-2 bg-primary/5'
-              : 'border-2 hover:border-primary/50'
+              ? 'border-green-500 border-2 bg-green-50 shadow-lg'
+              : 'border-2 hover:border-green-300 hover:shadow-md'
           }`}
           onClick={() => setFormData({ ...formData, paymentMethod: 'card' })}
         >
-          <div className="flex items-center gap-3">
-            <RadioGroupItem value="card" id="card" />
-            <div className="flex items-center gap-3 flex-1">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Icon name="CreditCard" className="text-primary" size={20} />
+          <div className="flex items-center gap-4">
+            <RadioGroupItem value="card" id="card" className="w-5 h-5" />
+            <div className="flex items-center gap-4 flex-1">
+              <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${
+                formData.paymentMethod === 'card' ? 'bg-green-500' : 'bg-gray-100'
+              }`}>
+                <Icon name="CreditCard" className={formData.paymentMethod === 'card' ? 'text-white' : 'text-gray-600'} size={24} />
               </div>
               <div>
-                <Label htmlFor="card" className="text-sm md:text-base font-semibold cursor-pointer">
+                <Label htmlFor="card" className="text-lg font-bold cursor-pointer">
                   На банковскую карту
                 </Label>
-                <p className="text-xs md:text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
+                  <Icon name="Zap" size={14} className="text-green-600" />
                   Моментальное зачисление
                 </p>
               </div>
             </div>
           </div>
           {formData.paymentMethod === 'card' && (
-            <div className="mt-4 space-y-3">
+            <div className="mt-5 space-y-3 animate-slide-up">
               <div>
-                <Label className="text-sm">
+                <Label className="text-base font-semibold mb-2 block">
                   Номер карты <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -93,7 +97,7 @@ export default function PaymentMethodStep({
                     setFormData({ ...formData, cardNumber: e.target.value })
                   }
                   placeholder="0000 0000 0000 0000"
-                  className="mt-1.5 h-11 md:h-10 text-base"
+                  className="h-12 text-base border-2 rounded-xl focus:border-green-500"
                   maxLength={19}
                   required
                 />
@@ -103,33 +107,37 @@ export default function PaymentMethodStep({
         </Card>
 
         <Card
-          className={`p-4 cursor-pointer transition-all ${
+          className={`p-5 cursor-pointer transition-all duration-300 animate-slide-up ${
             formData.paymentMethod === 'sbp'
-              ? 'border-primary border-2 bg-primary/5'
-              : 'border-2 hover:border-primary/50'
+              ? 'border-green-500 border-2 bg-green-50 shadow-lg'
+              : 'border-2 hover:border-green-300 hover:shadow-md'
           }`}
+          style={{ animationDelay: '0.1s' }}
           onClick={() => setFormData({ ...formData, paymentMethod: 'sbp' })}
         >
-          <div className="flex items-center gap-3">
-            <RadioGroupItem value="sbp" id="sbp" />
-            <div className="flex items-center gap-3 flex-1">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Icon name="Smartphone" className="text-primary" size={20} />
+          <div className="flex items-center gap-4">
+            <RadioGroupItem value="sbp" id="sbp" className="w-5 h-5" />
+            <div className="flex items-center gap-4 flex-1">
+              <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${
+                formData.paymentMethod === 'sbp' ? 'bg-green-500' : 'bg-gray-100'
+              }`}>
+                <Icon name="Smartphone" className={formData.paymentMethod === 'sbp' ? 'text-white' : 'text-gray-600'} size={24} />
               </div>
               <div>
-                <Label htmlFor="sbp" className="text-sm md:text-base font-semibold cursor-pointer">
+                <Label htmlFor="sbp" className="text-lg font-bold cursor-pointer">
                   Через СБП
                 </Label>
-                <p className="text-xs md:text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
+                  <Icon name="ShieldCheck" size={14} className="text-green-600" />
                   Система быстрых платежей
                 </p>
               </div>
             </div>
           </div>
           {formData.paymentMethod === 'sbp' && (
-            <div className="mt-4 space-y-3">
+            <div className="mt-5 space-y-3 animate-slide-up">
               <div>
-                <Label className="text-sm">
+                <Label className="text-base font-semibold mb-2 block">
                   Выберите банк <span className="text-red-500">*</span>
                 </Label>
                 <Select
@@ -138,7 +146,7 @@ export default function PaymentMethodStep({
                     setFormData({ ...formData, sbpBank: value })
                   }
                 >
-                  <SelectTrigger className="mt-1.5 h-11 md:h-10">
+                  <SelectTrigger className="h-12 border-2 rounded-xl">
                     <SelectValue placeholder="Выберите банк" />
                   </SelectTrigger>
                   <SelectContent className="max-h-[300px]">
@@ -151,7 +159,7 @@ export default function PaymentMethodStep({
                 </Select>
               </div>
               <div>
-                <Label className="text-sm">
+                <Label className="text-base font-semibold mb-2 block">
                   Номер телефона для СБП <span className="text-red-500">*</span>
                 </Label>
                 <InputMask
@@ -161,7 +169,7 @@ export default function PaymentMethodStep({
                     setFormData({ ...formData, phoneForSbp: e.target.value })
                   }
                   placeholder="+7 (999) 123-45-67"
-                  className="flex h-11 md:h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-1.5"
+                  className="flex h-12 w-full rounded-xl border-2 border-input bg-background px-4 py-3 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:border-green-500 disabled:cursor-not-allowed disabled:opacity-50"
                   required
                 />
               </div>
@@ -170,33 +178,37 @@ export default function PaymentMethodStep({
         </Card>
 
         <Card
-          className={`p-4 cursor-pointer transition-all ${
+          className={`p-5 cursor-pointer transition-all duration-300 animate-slide-up ${
             formData.paymentMethod === 'bank'
-              ? 'border-primary border-2 bg-primary/5'
-              : 'border-2 hover:border-primary/50'
+              ? 'border-green-500 border-2 bg-green-50 shadow-lg'
+              : 'border-2 hover:border-green-300 hover:shadow-md'
           }`}
+          style={{ animationDelay: '0.2s' }}
           onClick={() => setFormData({ ...formData, paymentMethod: 'bank' })}
         >
-          <div className="flex items-center gap-3">
-            <RadioGroupItem value="bank" id="bank" />
-            <div className="flex items-center gap-3 flex-1">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Icon name="Building2" className="text-primary" size={20} />
+          <div className="flex items-center gap-4">
+            <RadioGroupItem value="bank" id="bank" className="w-5 h-5" />
+            <div className="flex items-center gap-4 flex-1">
+              <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${
+                formData.paymentMethod === 'bank' ? 'bg-green-500' : 'bg-gray-100'
+              }`}>
+                <Icon name="Building2" className={formData.paymentMethod === 'bank' ? 'text-white' : 'text-gray-600'} size={24} />
               </div>
               <div>
-                <Label htmlFor="bank" className="text-sm md:text-base font-semibold cursor-pointer">
+                <Label htmlFor="bank" className="text-lg font-bold cursor-pointer">
                   На банковский счёт
                 </Label>
-                <p className="text-xs md:text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
+                  <Icon name="Clock" size={14} className="text-green-600" />
                   Перевод на расчётный счёт
                 </p>
               </div>
             </div>
           </div>
           {formData.paymentMethod === 'bank' && (
-            <div className="mt-4 space-y-3">
+            <div className="mt-5 space-y-3 animate-slide-up">
               <div>
-                <Label className="text-sm">
+                <Label className="text-base font-semibold mb-2 block">
                   Номер счёта <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -205,13 +217,13 @@ export default function PaymentMethodStep({
                     setFormData({ ...formData, bankAccount: e.target.value })
                   }
                   placeholder="40817810099910004312"
-                  className="mt-1.5 h-11 md:h-10 text-base"
+                  className="h-12 text-base border-2 rounded-xl focus:border-green-500"
                   maxLength={20}
                   required
                 />
               </div>
               <div>
-                <Label className="text-sm">
+                <Label className="text-base font-semibold mb-2 block">
                   Название банка <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -219,13 +231,13 @@ export default function PaymentMethodStep({
                   onChange={(e) =>
                     setFormData({ ...formData, bankName: e.target.value })
                   }
-                  placeholder="ПАО Сбербанк"
-                  className="mt-1.5 h-11 md:h-10 text-base"
+                  placeholder="Сбербанк"
+                  className="h-12 text-base border-2 rounded-xl focus:border-green-500"
                   required
                 />
               </div>
               <div>
-                <Label className="text-sm">
+                <Label className="text-base font-semibold mb-2 block">
                   БИК банка <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -234,7 +246,7 @@ export default function PaymentMethodStep({
                     setFormData({ ...formData, bankBik: e.target.value })
                   }
                   placeholder="044525225"
-                  className="mt-1.5 h-11 md:h-10 text-base"
+                  className="h-12 text-base border-2 rounded-xl focus:border-green-500"
                   maxLength={9}
                   required
                 />

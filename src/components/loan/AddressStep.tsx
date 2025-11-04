@@ -1,5 +1,7 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import Icon from '@/components/ui/icon';
 import { FormData } from './types';
 
 type AddressStepProps = {
@@ -12,17 +14,21 @@ export default function AddressStep({
   setFormData,
 }: AddressStepProps) {
   return (
-    <div className="space-y-4 md:space-y-7 animate-fade-in">
-      <div className="text-center space-y-1 md:space-y-2">
-        <h2 className="text-2xl md:text-4xl font-extrabold bg-gradient-to-r from-primary via-blue-600 to-accent bg-clip-text text-transparent">
+    <div className="space-y-6 animate-fade-in">
+      <div className="text-center space-y-3">
+        <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-600 flex items-center justify-center mb-4 shadow-lg animate-bounce-in">
+          <Icon name="MapPin" className="text-white" size={36} />
+        </div>
+        <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-orange-600 via-amber-600 to-yellow-600 bg-clip-text text-transparent">
           Адресные данные
         </h2>
-        <p className="text-sm md:text-lg text-muted-foreground font-medium">Укажите адреса регистрации и проживания</p>
+        <p className="text-base text-muted-foreground">Укажите адреса регистрации и проживания</p>
       </div>
 
-      <div className="space-y-3 md:space-y-5">
-        <div className="group">
-          <Label className="text-sm md:text-lg font-semibold flex items-center gap-1">
+      <div className="space-y-4 max-w-2xl mx-auto">
+        <div className="group animate-slide-up">
+          <Label className="text-base font-semibold flex items-center gap-2 mb-2">
+            <Icon name="Home" size={16} className="text-orange-600" />
             Адрес регистрации <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -31,43 +37,64 @@ export default function AddressStep({
               setFormData({ ...formData, regAddress: e.target.value })
             }
             placeholder="г. Москва, ул. Ленина, д. 1, кв. 10"
-            className="mt-1.5 md:mt-2 h-10 md:h-11 text-sm md:text-base border-2 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+            className="h-12 text-base border-2 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all"
             required
           />
+          <p className="text-sm text-muted-foreground mt-2 flex items-center gap-2">
+            <Icon name="Info" size={14} className="text-orange-600" />
+            Укажите адрес как в паспорте
+          </p>
         </div>
 
-        <div className="flex items-center space-x-2 md:space-x-3 p-3 md:p-4 bg-muted/30 rounded-xl border-2 border-transparent hover:border-primary/20 transition-all">
-          <input
-            type="checkbox"
+        <div className="flex items-center space-x-3 p-4 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border-2 border-orange-200 transition-all animate-slide-up" style={{ animationDelay: '0.1s' }}>
+          <Checkbox
             id="sameAddress"
             checked={formData.sameAddress}
-            onChange={(e) =>
+            onCheckedChange={(checked) =>
               setFormData({
                 ...formData,
-                sameAddress: e.target.checked,
-                actualAddress: e.target.checked ? formData.regAddress : '',
+                sameAddress: checked as boolean,
+                actualAddress: checked ? formData.regAddress : '',
               })
             }
-            className="w-4 h-4 md:w-5 md:h-5 rounded border-2 border-gray-300 text-primary focus:ring-2 focus:ring-primary/50"
+            className="w-5 h-5 border-2"
           />
-          <Label htmlFor="sameAddress" className="cursor-pointer text-sm md:text-lg font-medium">
+          <Label htmlFor="sameAddress" className="cursor-pointer text-base font-semibold flex items-center gap-2">
+            <Icon name="Check" size={16} className="text-orange-600" />
             Совпадает с адресом регистрации
           </Label>
         </div>
 
         {!formData.sameAddress && (
-          <div className="animate-fade-in group">
-            <Label className="text-sm md:text-lg font-semibold">Адрес фактического проживания</Label>
+          <div className="animate-fade-in group animate-slide-up" style={{ animationDelay: '0.2s' }}>
+            <Label className="text-base font-semibold flex items-center gap-2 mb-2">
+              <Icon name="MapPin" size={16} className="text-orange-600" />
+              Адрес фактического проживания
+            </Label>
             <Input
               value={formData.actualAddress}
               onChange={(e) =>
                 setFormData({ ...formData, actualAddress: e.target.value })
               }
               placeholder="г. Москва, ул. Пушкина, д. 5, кв. 20"
-              className="mt-1.5 md:mt-2 h-10 md:h-11 text-sm md:text-base border-2 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+              className="h-12 text-base border-2 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all"
             />
           </div>
         )}
+
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="flex items-start gap-3">
+            <Icon name="Shield" className="text-blue-600 flex-shrink-0 mt-0.5" size={20} />
+            <div>
+              <p className="text-sm font-semibold text-blue-900">
+                Зачем нужен адрес?
+              </p>
+              <p className="text-xs text-blue-700 mt-1">
+                Адрес необходим для проверки данных и оформления договора займа
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
