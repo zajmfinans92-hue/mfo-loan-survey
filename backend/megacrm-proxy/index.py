@@ -35,25 +35,47 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     
     body_data = json.loads(event.get('body', '{}'))
     
-    form_data = {
+    form_fields = []
+    
+    if body_data.get('name'):
+        form_fields.append({
+            'name': 'name',
+            'value': body_data['name']
+        })
+    
+    if body_data.get('phone'):
+        form_fields.append({
+            'name': 'phone',
+            'value': body_data['phone']
+        })
+    
+    if body_data.get('email'):
+        form_fields.append({
+            'name': 'email',
+            'value': body_data['email']
+        })
+    
+    if body_data.get('comment'):
+        form_fields.append({
+            'name': 'comment',
+            'value': body_data['comment']
+        })
+    
+    payload = {
         'hash': 'gqkx8mmfpd74ezm2',
-        'name': body_data.get('name', ''),
-        'phone': body_data.get('phone', ''),
-        'email': body_data.get('email', ''),
-        'comment': body_data.get('comment', '')
+        'fields': form_fields
     }
     
     print(f'📤 Отправка заявки в MegaCRM')
-    print(f'   Имя: {form_data["name"]}')
-    print(f'   Телефон: {form_data["phone"]}')
-    print(f'   Email: {form_data["email"]}')
+    print(f'   Данные: {json.dumps(payload, ensure_ascii=False)}')
     
-    params = urllib.parse.urlencode(form_data)
+    json_data = json.dumps(payload)
     
     conn = http.client.HTTPSConnection('cp.megacrm.ru')
-    conn.request('GET', f'/forms/handler.php?{params}', headers={
+    conn.request('POST', '/forms/handler.php', body=json_data, headers={
+        'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0',
-        'Accept': '*/*'
+        'Accept': 'application/json'
     })
     
     response = conn.getresponse()
