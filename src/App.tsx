@@ -10,6 +10,7 @@ import Oferta from "./pages/Oferta";
 import Privacy from "./pages/Privacy";
 import Refund from "./pages/Refund";
 import Contacts from "./pages/Contacts";
+import TestCRM from "./pages/TestCRM";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/refund" element={<Refund />} />
           <Route path="/contacts" element={<Contacts />} />
+          <Route path="/test-crm" element={<TestCRM />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
