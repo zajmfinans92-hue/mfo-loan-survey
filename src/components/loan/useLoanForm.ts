@@ -201,20 +201,24 @@ export const useLoanForm = () => {
         console.log('Заявка отправлена:', formData);
 
         try {
-          await fetch('https://cp.megacrm.ru/forms/handler.php', {
+          const response = await fetch('https://functions.poehali.dev/5567d68c-bc86-4b91-9e61-f085fdc9bee1', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
+              'Content-Type': 'application/json',
             },
-            body: new URLSearchParams({
-              hash: 'gqkx8mmfpd74ezm2',
+            body: JSON.stringify({
               name: `${formData.lastName} ${formData.firstName} ${formData.middleName}`.trim(),
               phone: formData.phone,
               email: formData.email,
               comment: `Сумма: ${formData.loanAmount} руб., Срок: ${formData.loanTerm} дней\nДата рождения: ${formData.birthDate}\nАдрес: ${formData.regAddress}\nРабота: ${formData.workplace}, ${formData.position}\nДоход: ${formData.monthlyIncome} руб.`,
-            }).toString(),
+            }),
           });
-          console.log('Данные отправлены в MegaCRM');
+          
+          if (response.ok) {
+            console.log('Данные успешно отправлены в MegaCRM');
+          } else {
+            console.error('Ошибка ответа от сервера:', await response.text());
+          }
         } catch (megacrmError) {
           console.error('Ошибка отправки в MegaCRM:', megacrmError);
         }
