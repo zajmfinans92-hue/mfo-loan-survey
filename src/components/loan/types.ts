@@ -6,6 +6,7 @@ export type FormData = {
   middleName: string;
   birthDate: string;
   phone: string;
+  phoneVerified?: boolean;
   email: string;
   regAddress: string;
   actualAddress: string;
