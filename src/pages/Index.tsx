@@ -9,6 +9,7 @@ import LegalModals from '@/components/loan/LegalModals';
 import FinalModal from '@/components/loan/FinalModal';
 import DocumentsModal from '@/components/loan/DocumentsModal';
 import RejectionModal from '@/components/loan/RejectionModal';
+import ManagerModal from '@/components/loan/ManagerModal';
 
 export default function Index() {
   const {
@@ -34,6 +35,9 @@ export default function Index() {
     setShowDocumentsModal,
     showRejectionModal,
     setShowRejectionModal,
+    showManagerModal,
+    setShowManagerModal,
+    currentManager,
     debtAmount,
     totalSteps,
     progressPercent,
@@ -134,6 +138,15 @@ export default function Index() {
         onOpenChange={setShowRejectionModal}
         debtAmount={debtAmount}
       />
+
+      {currentManager && (
+        <ManagerModal
+          open={showManagerModal}
+          onOpenChange={setShowManagerModal}
+          manager={currentManager}
+          formData={formData}
+        />
+      )}
     </div>
   );
 }

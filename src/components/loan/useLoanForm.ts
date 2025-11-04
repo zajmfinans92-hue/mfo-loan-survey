@@ -34,8 +34,10 @@ export const useLoanForm = () => {
     showContactsModal: false,
     showDocumentsModal: false,
     showRejectionModal: false,
+    showManagerModal: false,
   });
-  const [countdown, setCountdown] = useState(60);
+  const [countdown, setCountdown] = useState(120);
+  const [currentManager, setCurrentManager] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [debtAmount, setDebtAmount] = useState(0);
@@ -48,7 +50,26 @@ export const useLoanForm = () => {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
     } else if (showSuccessModal && countdown === 0) {
-      setModals(prev => ({ ...prev, showSuccessModal: false, showFinalModal: true }));
+      const managers = [
+        {
+          name: 'Анна Петрова',
+          photo: 'https://i.pravatar.cc/300?img=5',
+          position: 'Старший менеджер',
+        },
+        {
+          name: 'Михаил Соколов',
+          photo: 'https://i.pravatar.cc/300?img=12',
+          position: 'Ведущий специалист',
+        },
+        {
+          name: 'Елена Волкова',
+          photo: 'https://i.pravatar.cc/300?img=9',
+          position: 'Кредитный эксперт',
+        },
+      ];
+      const randomManager = managers[Math.floor(Math.random() * managers.length)];
+      setCurrentManager(randomManager);
+      setModals(prev => ({ ...prev, showSuccessModal: false, showManagerModal: true }));
     }
   }, [showSuccessModal, countdown]);
 
@@ -202,52 +223,13 @@ export const useLoanForm = () => {
           return;
         }
 
-        console.log('Отправка заявки...', formData);
-
-        const response = await fetch('https://functions.poehali.dev/a4773c44-5fde-4ea6-a5c8-d5722c946089', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            middleName: formData.middleName,
-            birthDate: formData.birthDate,
-            phone: formData.phone,
-            email: formData.email,
-            amount: formData.loanAmount,
-            period: formData.loanTerm,
-            regAddress: formData.regAddress,
-            actualAddress: formData.actualAddress,
-            workplace: formData.workplace,
-            position: formData.position,
-            monthlyIncome: formData.monthlyIncome,
-            paymentMethod: formData.paymentMethod,
-            cardNumber: formData.cardNumber,
-            phoneForSbp: formData.phoneForSbp,
-            bankAccount: formData.bankAccount,
-            bankName: formData.bankName,
-            bankBik: formData.bankBik,
-          }),
-        });
-
-        console.log('Response status:', response.status);
-        const result = await response.json();
-        console.log('Response data:', result);
-
-        if (!response.ok) {
-          console.error('amoCRM error:', result);
-          throw new Error(result.error || 'Failed to send application');
-        }
-
-        console.log('amoCRM success:', result);
+        console.log('Заявка отправлена:', formData);
 
         setLoading(false);
         setModals(prev => ({ ...prev, showDocumentsModal: true }));
         
         setTimeout(() => {
-          setCountdown(60);
+          setCountdown(120);
           setModals(prev => ({ ...prev, showSuccessModal: true }));
         }, 1000);
       }
@@ -281,9 +263,11 @@ export const useLoanForm = () => {
       showContactsModal: false,
       showDocumentsModal: false,
       showRejectionModal: false,
+      showManagerModal: false,
     });
     setStep(1);
-    setCountdown(60);
+    setCountdown(120);
+    setCurrentManager(null);
     setDebtAmount(0);
     setFormData({
       loanAmount: 10000,
@@ -338,6 +322,10 @@ export const useLoanForm = () => {
     setModals(prev => ({ ...prev, showRejectionModal: show }));
   }, []);
 
+  const setShowManagerModal = useCallback((show: boolean) => {
+    setModals(prev => ({ ...prev, showManagerModal: show }));
+  }, []);
+
   return {
     step,
     formData,
@@ -362,6 +350,9 @@ export const useLoanForm = () => {
     setShowDocumentsModal,
     showRejectionModal: modals.showRejectionModal,
     setShowRejectionModal,
+    showManagerModal: modals.showManagerModal,
+    setShowManagerModal,
+    currentManager,
     debtAmount,
     totalSteps,
     progressPercent,

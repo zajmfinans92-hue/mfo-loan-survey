@@ -21,26 +21,33 @@ export default function SuccessModal({
   onClose,
 }: SuccessModalProps) {
   const getCheckingStatus = () => {
-    if (countdown > 45) {
+    if (countdown > 90) {
       return {
         text: 'Идёт проверка данных',
         icon: 'FileSearch' as const,
         color: 'text-blue-600',
         bgColor: 'bg-blue-50',
       };
-    } else if (countdown > 30) {
+    } else if (countdown > 60) {
       return {
         text: 'Проверка в базе ФССП',
         icon: 'Shield' as const,
         color: 'text-orange-600',
         bgColor: 'bg-orange-50',
       };
-    } else {
+    } else if (countdown > 30) {
       return {
         text: 'Анализ кредитного рейтинга',
         icon: 'TrendingUp' as const,
         color: 'text-green-600',
         bgColor: 'bg-green-50',
+      };
+    } else {
+      return {
+        text: 'Подготовка документов',
+        icon: 'FileCheck' as const,
+        color: 'text-purple-600',
+        bgColor: 'bg-purple-50',
       };
     }
   };
@@ -76,7 +83,7 @@ export default function SuccessModal({
                 <Icon name={status.icon} className={status.color} size={20} />
                 <span className={`text-sm font-bold ${status.color}`}>{status.text}</span>
               </div>
-              <Progress value={((60 - countdown) / 60) * 100} className="h-3 mt-4 bg-blue-100" />
+              <Progress value={((120 - countdown) / 120) * 100} className="h-3 mt-4 bg-blue-100" />
             </div>
           </div>
 
@@ -114,7 +121,7 @@ export default function SuccessModal({
 
           <div className="pt-2 text-center animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <p className="text-xs text-muted-foreground">
-              Среднее время рассмотрения: <span className="font-semibold text-foreground">1-2 минуты</span>
+              Среднее время рассмотрения: <span className="font-semibold text-foreground">2 минуты</span>
             </p>
           </div>
         </div>
