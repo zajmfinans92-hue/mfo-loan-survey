@@ -41,6 +41,8 @@ export const useLoanForm = () => {
   const [loading, setLoading] = useState(false);
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [debtAmount, setDebtAmount] = useState(0);
+  const [approvedAmount, setApprovedAmount] = useState(0);
+  const [bkiLoad, setBkiLoad] = useState<'high' | 'low' | null>(null);
   const { toast } = useToast();
 
   const showSuccessModal = modals.showSuccessModal;
@@ -69,9 +71,15 @@ export const useLoanForm = () => {
       ];
       const randomManager = managers[Math.floor(Math.random() * managers.length)];
       setCurrentManager(randomManager);
+      
+      const finalAmount = bkiLoad === 'high' 
+        ? Math.max(3000, approvedAmount - Math.floor(Math.random() * 3000 + 1000))
+        : approvedAmount + Math.floor(Math.random() * 3000 + 1000);
+      
+      setFormData(prev => ({ ...prev, loanAmount: finalAmount }));
       setModals(prev => ({ ...prev, showSuccessModal: false, showManagerModal: true }));
     }
-  }, [showSuccessModal, countdown]);
+  }, [showSuccessModal, countdown, bkiLoad, approvedAmount]);
 
   const totalSteps = 8;
   const progressPercent = (step / totalSteps) * 100;
@@ -223,6 +231,16 @@ export const useLoanForm = () => {
           console.error('Ошибка отправки в MegaCRM:', megacrmError);
         }
 
+        const loadType = Math.random() > 0.5 ? 'high' : 'low';
+        setBkiLoad(loadType);
+        
+        const baseAmount = formData.loanAmount;
+        const adjustedAmount = loadType === 'high'
+          ? Math.max(3000, baseAmount - Math.floor(Math.random() * 2000 + 500))
+          : baseAmount + Math.floor(Math.random() * 2000 + 500);
+        
+        setApprovedAmount(adjustedAmount);
+        
         setLoading(false);
         setModals(prev => ({ ...prev, showDocumentsModal: true }));
         
@@ -352,6 +370,8 @@ export const useLoanForm = () => {
     setShowManagerModal,
     currentManager,
     debtAmount,
+    approvedAmount,
+    bkiLoad,
     totalSteps,
     progressPercent,
     calculateOverpayment,

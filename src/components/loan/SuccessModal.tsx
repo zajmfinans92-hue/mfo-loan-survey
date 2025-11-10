@@ -11,6 +11,8 @@ type SuccessModalProps = {
   countdown: number;
   formData: FormData;
   onClose: () => void;
+  approvedAmount?: number;
+  bkiLoad?: 'high' | 'low' | null;
 };
 
 export default function SuccessModal({
@@ -19,6 +21,8 @@ export default function SuccessModal({
   countdown,
   formData,
   onClose,
+  approvedAmount,
+  bkiLoad,
 }: SuccessModalProps) {
   const getCheckingStatus = () => {
     if (countdown > 90) {
@@ -53,9 +57,12 @@ export default function SuccessModal({
   };
 
   const status = getCheckingStatus();
-  const formatAmount = (amount: string) => {
+  const formatAmount = (amount: string | number) => {
     return new Intl.NumberFormat('ru-RU').format(Number(amount)) + ' ₽';
   };
+
+  const displayAmount = approvedAmount || formData.loanAmount;
+  const isAmountChanging = countdown < 90 && approvedAmount && approvedAmount !== formData.loanAmount;
 
   return (
     <Dialog open={open} onOpenChange={() => {}}>
@@ -88,13 +95,28 @@ export default function SuccessModal({
           </div>
 
           <div className="grid grid-cols-2 gap-3 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            <Card className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+            <Card className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 transform transition-all duration-500">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Icon name="Banknote" className="text-green-600 animate-bounce-in" size={20} />
-                  <p className="text-xs font-semibold text-green-900">Сумма займа</p>
+                  <p className="text-xs font-semibold text-green-900">
+                    {isAmountChanging ? 'Одобренная сумма' : 'Сумма займа'}
+                  </p>
                 </div>
-                <p className="text-lg font-bold text-green-700">{formatAmount(formData.loanAmount)}</p>
+                <p className={`text-lg font-bold transition-all duration-500 ${
+                  isAmountChanging 
+                    ? bkiLoad === 'high' 
+                      ? 'text-orange-600 animate-pulse' 
+                      : 'text-green-600 animate-pulse'
+                    : 'text-green-700'
+                }`}>
+                  {formatAmount(displayAmount)}
+                </p>
+                {isAmountChanging && (
+                  <p className="text-xs text-muted-foreground">
+                    Запрошено: {formatAmount(formData.loanAmount)}
+                  </p>
+                )}
               </div>
             </Card>
             

@@ -39,6 +39,8 @@ export default function Index() {
     setShowManagerModal,
     currentManager,
     debtAmount,
+    approvedAmount,
+    bkiLoad,
     totalSteps,
     progressPercent,
     calculateOverpayment,
@@ -83,6 +85,8 @@ export default function Index() {
         countdown={countdown}
         formData={formData}
         onClose={handleCloseModal}
+        approvedAmount={approvedAmount}
+        bkiLoad={bkiLoad}
       />
 
       <PrivacyPolicyModal
