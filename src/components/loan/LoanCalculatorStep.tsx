@@ -33,7 +33,7 @@ export default function LoanCalculatorStep({
 
       <div className="space-y-8 max-w-2xl mx-auto">
         <div className="space-y-4 animate-slide-up">
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border-2 border-blue-200">
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6 border-2 border-blue-200">
             <div className="flex justify-between items-center mb-4">
               <Label className="text-lg font-bold text-blue-900 flex items-center gap-2">
                 <Icon name="Banknote" size={20} className="text-blue-600" />
@@ -63,7 +63,7 @@ export default function LoanCalculatorStep({
         </div>
 
         <div className="space-y-4 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border-2 border-purple-200">
+          <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-6 border-2 border-purple-200">
             <div className="flex justify-between items-center mb-4">
               <Label className="text-lg font-bold text-purple-900 flex items-center gap-2">
                 <Icon name="Calendar" size={20} className="text-purple-600" />

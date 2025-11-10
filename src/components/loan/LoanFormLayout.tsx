@@ -39,7 +39,7 @@ const LoanFormLayout = ({
         <p className="text-sm md:text-lg text-blue-50 font-medium">Быстрое оформление за 5 минут ⚡</p>
       </div>
 
-      <Card className="p-4 md:p-8 mb-4 md:mb-8 shadow-2xl rounded-2xl md:rounded-3xl glass-effect border-0 animate-fade-in">
+      <Card className="p-4 md:p-8 mb-4 md:mb-8 shadow-2xl rounded-lg glass-effect border-0 animate-fade-in">
         <div className="mb-5 md:mb-8">
           <div className="flex justify-between items-center mb-2 md:mb-3">
             <div>

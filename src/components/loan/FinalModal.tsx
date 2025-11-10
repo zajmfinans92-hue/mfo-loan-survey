@@ -9,7 +9,7 @@ const FinalModal = ({ show }: FinalModalProps) => {
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-6">
-      <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 max-w-md w-full shadow-2xl animate-bounce-in">
+      <div className="bg-white rounded-lg p-6 sm:p-8 md:p-10 max-w-md w-full shadow-2xl animate-bounce-in">
         <div className="text-center space-y-5 sm:space-y-6">
           <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-xl animate-scale-in">
             <Icon name="CheckCircle2" className="text-white" size={44} />

@@ -59,7 +59,7 @@ export default function SuccessModal({
 
   return (
     <Dialog open={open} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-lg rounded-3xl border-0 shadow-2xl p-0 overflow-hidden animate-scale-in" hideClose>
+      <DialogContent className="sm:max-w-lg rounded-lg border-0 shadow-2xl p-0 overflow-hidden animate-scale-in" hideClose>
         <div className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 p-8 text-white relative overflow-hidden animate-slide-down">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMTZoNFYwaC00djE2em0wIDQ0aDR2LTE2aC00djE2ek0xNiAzNmg0di00aC00djR6bTQ0IDBoNHYtNGgtNHY0eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30"></div>
           <div className="relative z-10 text-center space-y-4">
