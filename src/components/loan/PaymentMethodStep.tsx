@@ -135,7 +135,7 @@ export default function PaymentMethodStep({
             </div>
           </div>
           {formData.paymentMethod === 'sbp' && (
-            <div className="mt-5 space-y-3 animate-slide-up">
+            <div className="mt-5 space-y-4 animate-slide-up">
               <div>
                 <Label className="text-base font-semibold mb-2 block">
                   Выберите банк <span className="text-red-500">*</span>
@@ -146,8 +146,8 @@ export default function PaymentMethodStep({
                     setFormData({ ...formData, sbpBank: value })
                   }
                 >
-                  <SelectTrigger className="h-12 border-2 rounded-xl">
-                    <SelectValue placeholder="Выберите банк" />
+                  <SelectTrigger className="h-12 border-2 rounded-xl focus:border-green-500">
+                    <SelectValue placeholder="Выберите ваш банк" />
                   </SelectTrigger>
                   <SelectContent className="max-h-[300px]">
                     {RUSSIAN_BANKS.map((bank) => (
@@ -173,6 +173,32 @@ export default function PaymentMethodStep({
                   required
                 />
               </div>
+              {formData.sbpBank && formData.phoneForSbp && (
+                <Card className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-300 animate-slide-up">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <Icon name="CheckCircle2" className="text-green-600" size={20} />
+                      <h4 className="font-bold text-green-900">Реквизиты для перевода</h4>
+                    </div>
+                    <div className="space-y-2 bg-white/50 rounded-lg p-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-green-700 font-medium">Банк получателя:</span>
+                        <span className="text-sm font-bold text-green-900">{formData.sbpBank}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-green-700 font-medium">Телефон для СБП:</span>
+                        <span className="text-sm font-bold text-green-900">{formData.phoneForSbp}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2 bg-blue-50 p-3 rounded-lg">
+                      <Icon name="Info" className="text-blue-600 flex-shrink-0 mt-0.5" size={16} />
+                      <p className="text-xs text-blue-700">
+                        Средства будут переведены на указанный номер телефона через СБП
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+              )}
             </div>
           )}
         </Card>

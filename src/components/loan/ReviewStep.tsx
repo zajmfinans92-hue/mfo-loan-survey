@@ -121,17 +121,66 @@ export default function ReviewStep({ formData }: ReviewStepProps) {
         <Card className="p-5 bg-gradient-to-br from-indigo-50 to-blue-50 border-indigo-200">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center">
-              <Icon name="CreditCard" className="text-white" size={20} />
+              <Icon name="Wallet" className="text-white" size={20} />
             </div>
             <h3 className="text-lg font-bold text-indigo-900">Способ получения</h3>
           </div>
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-indigo-700">Метод</span>
-            <span className="text-base font-bold text-indigo-900">
-              {formData.paymentMethod === 'card' && '💳 Банковская карта'}
-              {formData.paymentMethod === 'sbp' && '📱 СБП'}
-              {formData.paymentMethod === 'bank' && '🏦 Банковский счёт'}
-            </span>
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-indigo-700">Метод</span>
+              <span className="text-base font-bold text-indigo-900">
+                {formData.paymentMethod === 'card' && '💳 Банковская карта'}
+                {formData.paymentMethod === 'sbp' && '📱 СБП'}
+                {formData.paymentMethod === 'bank' && '🏦 Банковский счёт'}
+              </span>
+            </div>
+            
+            {formData.paymentMethod === 'card' && formData.cardNumber && (
+              <div className="bg-white/50 rounded-lg p-3 space-y-1.5">
+                <p className="text-xs text-indigo-600">Номер карты</p>
+                <p className="text-sm font-bold text-indigo-900">{formData.cardNumber}</p>
+              </div>
+            )}
+            
+            {formData.paymentMethod === 'sbp' && (
+              <div className="bg-white/50 rounded-lg p-3 space-y-2">
+                {formData.sbpBank && (
+                  <div>
+                    <p className="text-xs text-indigo-600">Банк</p>
+                    <p className="text-sm font-bold text-indigo-900">{formData.sbpBank}</p>
+                  </div>
+                )}
+                {formData.phoneForSbp && (
+                  <div>
+                    <p className="text-xs text-indigo-600">Телефон для СБП</p>
+                    <p className="text-sm font-bold text-indigo-900">{formData.phoneForSbp}</p>
+                  </div>
+                )}
+              </div>
+            )}
+            
+            {formData.paymentMethod === 'bank' && (
+              <div className="bg-white/50 rounded-lg p-3 space-y-2">
+                {formData.bankName && (
+                  <div>
+                    <p className="text-xs text-indigo-600">Название банка</p>
+                    <p className="text-sm font-bold text-indigo-900">{formData.bankName}</p>
+                  </div>
+                )}
+                {formData.bankAccount && (
+                  <div>
+                    <p className="text-xs text-indigo-600">Номер счёта</p>
+                    <p className="text-sm font-bold text-indigo-900">{formData.bankAccount}</p>
+                  </div>
+                )}
+                {formData.bankBik && (
+                  <div>
+                    <p className="text-xs text-indigo-600">БИК</p>
+                    <p className="text-sm font-bold text-indigo-900">{formData.bankBik}</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </Card>
       </div>
