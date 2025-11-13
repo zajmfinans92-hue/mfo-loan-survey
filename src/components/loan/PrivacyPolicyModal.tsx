@@ -28,7 +28,7 @@ export default function PrivacyPolicyModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={`max-w-2xl w-[calc(100%-2rem)] sm:w-full max-h-[90vh] p-0 relative overflow-hidden rounded-2xl ${isAccepting ? 'border-4 animate-border-glow' : ''}`}>
+      <DialogContent className={`max-w-2xl w-[calc(100%-2rem)] sm:w-full max-h-[85vh] sm:max-h-[90vh] p-0 relative overflow-hidden rounded-2xl !top-[50%] !translate-y-[-50%] ${isAccepting ? 'border-4 animate-border-glow' : ''}`}>
         {isAccepting && (
           <div className="absolute inset-0 pointer-events-none z-10">
             <div className="absolute inset-0 animate-border-glow opacity-20 rounded-2xl"></div>
