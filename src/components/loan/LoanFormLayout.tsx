@@ -25,18 +25,26 @@ const LoanFormLayout = ({
 }: LoanFormLayoutProps) => {
   return (
     <div className="max-w-2xl mx-auto relative z-10">
-      <div className="mb-4 md:mb-10 text-center px-1 md:px-2 animate-slide-up">
-        <div className="flex flex-col items-center gap-2 md:gap-3 mb-2 md:mb-3">
+      <div className="mb-4 md:mb-10 px-1 md:px-2 animate-slide-up">
+        <div className="flex items-center justify-between mb-4 md:mb-6">
           <img 
             src="https://cdn.poehali.dev/files/8e6a9c1a-a95c-47fa-a912-9ffdc0f5dbea.png" 
-            alt="Logo" 
-            className="h-12 md:h-16 w-auto drop-shadow-2xl animate-bounce-in"
+            alt="Деньги в Дом" 
+            className="h-10 md:h-14 w-auto drop-shadow-2xl animate-bounce-in"
           />
-          <h1 className="text-2xl md:text-5xl font-extrabold text-white drop-shadow-2xl">
+          <a 
+            href="tel:+74951178765" 
+            className="text-white font-bold text-base md:text-xl drop-shadow-lg hover:text-blue-100 transition-colors"
+          >
+            8(495)117-85-67
+          </a>
+        </div>
+        <div className="text-center">
+          <h1 className="text-2xl md:text-5xl font-extrabold text-white drop-shadow-2xl mb-2">
             Заявка на займ
           </h1>
+          <p className="text-sm md:text-lg text-blue-50 font-medium">Быстрое оформление за 5 минут ⚡</p>
         </div>
-        <p className="text-sm md:text-lg text-blue-50 font-medium">Быстрое оформление за 5 минут ⚡</p>
       </div>
 
       <Card className="p-4 md:p-8 mb-4 md:mb-8 shadow-2xl rounded-lg glass-effect border-0 animate-fade-in">
