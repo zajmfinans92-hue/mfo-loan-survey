@@ -1,7 +1,5 @@
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 import { FormData } from './types';
 
@@ -17,136 +15,151 @@ type SuccessModalProps = {
 
 export default function SuccessModal({
   open,
-  onOpenChange,
   countdown,
   formData,
-  onClose,
   approvedAmount,
-  bkiLoad,
 }: SuccessModalProps) {
-  const getCheckingStatus = () => {
-    if (countdown > 90) {
-      return {
-        text: 'Идёт проверка данных',
-        icon: 'FileSearch' as const,
-        color: 'text-blue-600',
-        bgColor: 'bg-blue-50',
-      };
-    } else if (countdown > 60) {
-      return {
-        text: 'Проверка документов',
-        icon: 'Shield' as const,
-        color: 'text-orange-600',
-        bgColor: 'bg-orange-50',
-      };
-    } else if (countdown > 30) {
-      return {
-        text: 'Анализ платежеспособности',
-        icon: 'TrendingUp' as const,
-        color: 'text-green-600',
-        bgColor: 'bg-green-50',
-      };
-    } else {
-      return {
-        text: 'Подготовка договора',
-        icon: 'FileCheck' as const,
-        color: 'text-purple-600',
-        bgColor: 'bg-purple-50',
-      };
-    }
-  };
-
-  const status = getCheckingStatus();
   const formatAmount = (amount: string | number) => {
     return new Intl.NumberFormat('ru-RU').format(Number(amount)) + ' ₽';
   };
 
   const displayAmount = approvedAmount || formData.loanAmount;
-  const isAmountChanging = countdown < 90 && approvedAmount && approvedAmount !== formData.loanAmount;
+  const progressPercent = ((120 - countdown) / 120) * 100;
+
+  const getCurrentStep = () => {
+    if (countdown > 80) return 1;
+    if (countdown > 40) return 2;
+    return 3;
+  };
+
+  const currentStep = getCurrentStep();
+
+  const calculateReturnDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + Number(formData.loanTerm));
+    return date.toLocaleDateString('ru-RU');
+  };
+
+  const getCurrentDate = () => {
+    return new Date().toLocaleDateString('ru-RU');
+  };
 
   return (
     <Dialog open={open} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-lg rounded-lg border-0 shadow-2xl p-0 overflow-hidden animate-scale-in" hideClose>
-        <div className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 p-8 text-white relative overflow-hidden animate-slide-down">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMTZoNFYwaC00djE2em0wIDQ0aDR2LTE2aC00djE2ek0xNiAzNmg0di00aC00djR6bTQ0IDBoNHYtNGgtNHY0eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30"></div>
-          <div className="relative z-10 text-center space-y-4">
-            <div className="mx-auto w-24 h-24 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mb-2 animate-bounce-in">
-              <Icon name="Clock" className="text-white animate-pulse" size={48} />
+      <DialogContent className="sm:max-w-md rounded-2xl border-0 shadow-2xl p-8 overflow-hidden" hideClose>
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="flex flex-col items-center gap-2">
+            <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${
+              currentStep >= 1 ? 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg scale-110' : 'bg-blue-200'
+            }`}>
+              <Icon name="FileText" className="text-white" size={32} />
             </div>
-            <div className="animate-fade-in">
-              <h2 className="text-3xl font-extrabold mb-2">Рассмотрение заявки</h2>
-              <p className="text-blue-100 text-sm">Идет автоматическая проверка данных</p>
+            <span className={`text-sm font-bold transition-colors ${
+              currentStep >= 1 ? 'text-blue-600' : 'text-gray-400'
+            }`}>
+              Регистрация
+            </span>
+          </div>
+
+          <div className={`flex-1 h-1 rounded transition-all ${
+            currentStep >= 2 ? 'bg-blue-500' : 'bg-blue-200'
+          }`}></div>
+
+          <div className="flex flex-col items-center gap-2">
+            <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${
+              currentStep >= 2 ? 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg scale-110' : 'bg-blue-200'
+            }`}>
+              <Icon name="CheckCircle" className="text-white" size={32} />
+            </div>
+            <span className={`text-sm font-bold transition-colors ${
+              currentStep >= 2 ? 'text-blue-600' : 'text-gray-400'
+            }`}>
+              Одобрение
+            </span>
+          </div>
+
+          <div className={`flex-1 h-1 rounded transition-all ${
+            currentStep >= 3 ? 'bg-blue-500' : 'bg-blue-200'
+          }`}></div>
+
+          <div className="flex flex-col items-center gap-2">
+            <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${
+              currentStep >= 3 ? 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg scale-110' : 'bg-blue-200'
+            }`}>
+              <div className="text-white text-2xl font-bold">₽</div>
+            </div>
+            <span className={`text-sm font-bold transition-colors ${
+              currentStep >= 3 ? 'text-blue-600' : 'text-gray-400'
+            }`}>
+              Перевод
+            </span>
+          </div>
+        </div>
+
+        <div className="text-center space-y-2 mb-8">
+          <h2 className="text-3xl font-black text-gray-900">Договор займа</h2>
+          <p className="text-gray-500">от {getCurrentDate()}</p>
+        </div>
+
+        <div className="flex items-center justify-center mb-8">
+          <div className="relative">
+            <div className="w-32 h-32 rounded-full border-8 border-blue-100 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full border-8 border-transparent border-t-blue-500 border-r-blue-500 animate-spin"></div>
             </div>
           </div>
         </div>
 
-        <div className="p-6 space-y-4">
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-200 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            <div className="text-center space-y-4">
-              <div className="text-7xl font-black text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text tabular-nums animate-pulse">
-                {Math.floor(countdown / 60)}:{(countdown % 60).toString().padStart(2, '0')}
-              </div>
-              <div className={`inline-flex items-center gap-2 ${status.bgColor} px-5 py-2.5 rounded-full animate-fade-in shadow-sm`}>
-                <Icon name={status.icon} className={status.color} size={20} />
-                <span className={`text-sm font-bold ${status.color}`}>{status.text}</span>
-              </div>
-              <Progress value={((120 - countdown) / 120) * 100} className="h-3 mt-4 bg-blue-100" />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            <Card className="p-4 bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 transform transition-all duration-500">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Icon name="Banknote" className="text-green-600 animate-bounce-in" size={20} />
-                  <p className="text-xs font-semibold text-green-900">
-                    {isAmountChanging ? 'Одобренная сумма' : 'Сумма займа'}
-                  </p>
-                </div>
-                <p className={`text-lg font-bold transition-all duration-500 ${
-                  isAmountChanging 
-                    ? bkiLoad === 'high' 
-                      ? 'text-orange-600 animate-pulse' 
-                      : 'text-green-600 animate-pulse'
-                    : 'text-green-700'
-                }`}>
-                  {formatAmount(displayAmount)}
-                </p>
-                {isAmountChanging && (
-                  <p className="text-xs text-muted-foreground">
-                    Запрошено: {formatAmount(formData.loanAmount)}
-                  </p>
-                )}
-              </div>
-            </Card>
-            
-            <Card className="p-4 bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Icon name="Calendar" className="text-amber-600 animate-bounce-in" size={20} />
-                  <p className="text-xs font-semibold text-amber-900">Срок займа</p>
-                </div>
-                <p className="text-lg font-bold text-amber-700">{formData.loanTerm} дней</p>
-              </div>
-            </Card>
-          </div>
-
-          <Card className="p-4 bg-gradient-to-br from-indigo-50 to-blue-50 border-indigo-200 animate-slide-up transform transition-all duration-300 hover:shadow-lg" style={{ animationDelay: '0.3s' }}>
-            <div className="flex gap-3">
-              <Icon name="Phone" className="text-indigo-600 flex-shrink-0 animate-bounce-in" size={22} />
-              <div>
-                <p className="text-sm font-bold text-indigo-900">Способ связи</p>
-                <p className="text-sm text-indigo-700 mt-1">Звонок на {formData.phone}</p>
-              </div>
-            </div>
-          </Card>
-
-          <div className="pt-2 text-center animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <p className="text-xs text-muted-foreground">
-              Среднее время рассмотрения: <span className="font-semibold text-foreground">2 минуты</span>
-            </p>
-          </div>
+        <div className="text-center space-y-2 mb-6">
+          <h3 className="text-2xl font-bold text-gray-900">Обработка данных</h3>
+          <p className="text-gray-500">Обычно это занимает менее 3 минут</p>
         </div>
+
+        <Card className="p-4 bg-gray-50 border border-gray-200 rounded-xl mb-3">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+              <Icon name="Clock" className="text-white" size={24} />
+            </div>
+            <div className="flex-1">
+              <p className="text-base font-bold text-gray-900 mb-1">Рассмотрение заявки</p>
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-bold tabular-nums text-gray-900">
+                  {Math.floor(countdown / 60)}:{(countdown % 60).toString().padStart(2, '0')}
+                </span>
+                <span className="text-sm text-gray-500">осталось</span>
+              </div>
+            </div>
+          </div>
+          <div className="mt-3 bg-gray-200 rounded-full h-2 overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-1000 ease-linear"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
+        </Card>
+
+        <Card className="p-4 bg-gray-50 border border-gray-200 rounded-xl mb-3">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+              <div className="text-white text-xl font-bold">₽</div>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500 mb-1">Запрошенная сумма</p>
+              <p className="text-2xl font-black text-gray-900">{formatAmount(displayAmount)}</p>
+            </div>
+          </div>
+        </Card>
+
+        <Card className="p-4 bg-gray-50 border border-gray-200 rounded-xl">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+              <Icon name="Calendar" className="text-white" size={24} />
+            </div>
+            <div>
+              <p className="text-sm text-gray-500 mb-1">Вернуть до</p>
+              <p className="text-2xl font-black text-gray-900">{calculateReturnDate()}</p>
+            </div>
+          </div>
+        </Card>
       </DialogContent>
     </Dialog>
   );
