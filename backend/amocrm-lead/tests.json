@@ -1,0 +1,38 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS request for CORS",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Create lead with full data",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "firstName": "Иван",
+        "lastName": "Петров",
+        "middleName": "Сергеевич",
+        "phone": "+79001234567",
+        "email": "test@example.com",
+        "loanAmount": 15000,
+        "loanTerm": 14,
+        "birthDate": "01.01.1990",
+        "regAddress": "Москва, ул. Тестовая, д. 1",
+        "workplace": "ООО Тест",
+        "position": "Менеджер",
+        "monthlyIncome": "50000"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "contact_id": "number",
+        "lead_id": "number"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

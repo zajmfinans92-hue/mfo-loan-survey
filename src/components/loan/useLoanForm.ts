@@ -206,7 +206,39 @@ export const useLoanForm = () => {
         console.log('Заявка отправлена:', formData);
 
         try {
-          const response = await fetch('https://functions.poehali.dev/5567d68c-bc86-4b91-9e61-f085fdc9bee1', {
+          const amocrmResponse = await fetch('https://functions.poehali.dev/b90660dc-f2c2-4f09-bb59-603cdd285643', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+              middleName: formData.middleName,
+              phone: formData.phone,
+              email: formData.email,
+              loanAmount: formData.loanAmount,
+              loanTerm: formData.loanTerm,
+              birthDate: formData.birthDate,
+              regAddress: formData.regAddress,
+              workplace: formData.workplace,
+              position: formData.position,
+              monthlyIncome: formData.monthlyIncome,
+            }),
+          });
+          
+          if (amocrmResponse.ok) {
+            const amocrmResult = await amocrmResponse.json();
+            console.log('Сделка создана в AmoCRM:', amocrmResult);
+          } else {
+            console.error('Ошибка создания сделки в AmoCRM:', await amocrmResponse.text());
+          }
+        } catch (amocrmError) {
+          console.error('Ошибка отправки в AmoCRM:', amocrmError);
+        }
+
+        try {
+          const megacrmResponse = await fetch('https://functions.poehali.dev/5567d68c-bc86-4b91-9e61-f085fdc9bee1', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -219,10 +251,10 @@ export const useLoanForm = () => {
             }),
           });
           
-          if (response.ok) {
+          if (megacrmResponse.ok) {
             console.log('Данные успешно отправлены в MegaCRM');
           } else {
-            console.error('Ошибка ответа от сервера:', await response.text());
+            console.error('Ошибка ответа от MegaCRM:', await megacrmResponse.text());
           }
         } catch (megacrmError) {
           console.error('Ошибка отправки в MegaCRM:', megacrmError);
