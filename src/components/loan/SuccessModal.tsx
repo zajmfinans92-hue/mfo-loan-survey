@@ -47,12 +47,21 @@ export default function SuccessModal({
   return (
     <Dialog open={open} onOpenChange={() => {}}>
       <DialogContent className="sm:max-w-md rounded-2xl border-0 shadow-2xl p-8 overflow-hidden" hideClose>
-        <div className="flex items-center justify-center gap-4 mb-8">
-          <div className="flex flex-col items-center gap-2">
-            <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${
-              currentStep >= 1 ? 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg scale-110' : 'bg-blue-200'
+        <div className="flex items-center justify-center gap-2 mb-8">
+          <div className="flex flex-col items-center gap-3">
+            <div className={`relative w-20 h-20 rounded-full flex items-center justify-center transition-all ${
+              currentStep >= 1 
+                ? 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-xl' 
+                : 'bg-white border-4 border-gray-300 shadow-md'
             }`}>
-              <Icon name="FileText" className="text-white" size={32} />
+              <Icon 
+                name="FileText" 
+                className={currentStep >= 1 ? 'text-white' : 'text-gray-400'} 
+                size={32} 
+              />
+              {currentStep >= 1 && (
+                <div className="absolute inset-0 rounded-full bg-blue-400 opacity-50 animate-ping"></div>
+              )}
             </div>
             <span className={`text-sm font-bold transition-colors ${
               currentStep >= 1 ? 'text-blue-600' : 'text-gray-400'
@@ -61,15 +70,24 @@ export default function SuccessModal({
             </span>
           </div>
 
-          <div className={`flex-1 h-1 rounded transition-all ${
-            currentStep >= 2 ? 'bg-blue-500' : 'bg-blue-200'
+          <div className={`flex-1 h-0.5 transition-all mx-2 ${
+            currentStep >= 2 ? 'bg-gradient-to-r from-blue-500 to-blue-400' : 'bg-gray-300'
           }`}></div>
 
-          <div className="flex flex-col items-center gap-2">
-            <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${
-              currentStep >= 2 ? 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg scale-110' : 'bg-blue-200'
+          <div className="flex flex-col items-center gap-3">
+            <div className={`relative w-20 h-20 rounded-full flex items-center justify-center transition-all ${
+              currentStep >= 2 
+                ? 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-xl' 
+                : 'bg-white border-4 border-gray-300 shadow-md'
             }`}>
-              <Icon name="CheckCircle" className="text-white" size={32} />
+              <Icon 
+                name="ClipboardCheck" 
+                className={currentStep >= 2 ? 'text-white' : 'text-gray-400'} 
+                size={32} 
+              />
+              {currentStep >= 2 && (
+                <div className="absolute inset-0 rounded-full bg-blue-400 opacity-50 animate-ping"></div>
+              )}
             </div>
             <span className={`text-sm font-bold transition-colors ${
               currentStep >= 2 ? 'text-blue-600' : 'text-gray-400'
@@ -78,15 +96,22 @@ export default function SuccessModal({
             </span>
           </div>
 
-          <div className={`flex-1 h-1 rounded transition-all ${
-            currentStep >= 3 ? 'bg-blue-500' : 'bg-blue-200'
+          <div className={`flex-1 h-0.5 transition-all mx-2 ${
+            currentStep >= 3 ? 'bg-gradient-to-r from-blue-500 to-blue-400' : 'bg-gray-300'
           }`}></div>
 
-          <div className="flex flex-col items-center gap-2">
-            <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${
-              currentStep >= 3 ? 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg scale-110' : 'bg-blue-200'
+          <div className="flex flex-col items-center gap-3">
+            <div className={`relative w-20 h-20 rounded-full flex items-center justify-center transition-all ${
+              currentStep >= 3 
+                ? 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-xl' 
+                : 'bg-white border-4 border-gray-300 shadow-md'
             }`}>
-              <div className="text-white text-2xl font-bold">₽</div>
+              <div className={`text-2xl font-bold ${currentStep >= 3 ? 'text-white' : 'text-gray-400'}`}>
+                ₽
+              </div>
+              {currentStep >= 3 && (
+                <div className="absolute inset-0 rounded-full bg-blue-400 opacity-50 animate-ping"></div>
+              )}
             </div>
             <span className={`text-sm font-bold transition-colors ${
               currentStep >= 3 ? 'text-blue-600' : 'text-gray-400'
