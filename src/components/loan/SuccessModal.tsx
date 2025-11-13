@@ -42,10 +42,15 @@ export default function SuccessModal({
         <div className="flex items-start justify-between mb-4 sm:mb-6">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-md">
-              <div className="text-white text-base sm:text-xl font-black">₽</div>
+              <Icon name="Home" className="text-white" size={18} />
             </div>
-            <span className="text-base sm:text-lg font-bold text-blue-600">ZaimGo</span>
+            <span className="text-sm sm:text-base font-bold text-blue-600">Деньги в дом</span>
           </div>
+          <a href="tel:+74951178765" className="flex items-center gap-1 text-xs sm:text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors">
+            <Icon name="Phone" size={14} />
+            <span className="hidden sm:inline">+7(495) 117-87-65</span>
+            <span className="sm:hidden">+7(495)117-87-65</span>
+          </a>
         </div>
 
         <div className="text-center space-y-1 sm:space-y-2 mb-4 sm:mb-8">
