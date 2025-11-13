@@ -39,6 +39,15 @@ export default function SuccessModal({
   return (
     <Dialog open={open} onOpenChange={() => {}}>
       <DialogContent className="sm:max-w-md w-[calc(100%-2rem)] max-h-[90vh] overflow-y-auto rounded-2xl border-0 shadow-2xl p-4 sm:p-8" hideClose>
+        <div className="flex items-start justify-between mb-4 sm:mb-6">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-md">
+              <div className="text-white text-base sm:text-xl font-black">₽</div>
+            </div>
+            <span className="text-base sm:text-lg font-bold text-blue-600">ZaimGo</span>
+          </div>
+        </div>
+
         <div className="text-center space-y-1 sm:space-y-2 mb-4 sm:mb-8">
           <h2 className="text-2xl sm:text-3xl font-black text-gray-900">Договор займа</h2>
           <p className="text-sm sm:text-base text-gray-500">от {getCurrentDate()}</p>
