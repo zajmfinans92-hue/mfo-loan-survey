@@ -44,10 +44,10 @@ export default function SuccessModal({
           <p className="text-sm sm:text-base text-gray-500">от {getCurrentDate()}</p>
         </div>
 
-        <div className="flex items-center justify-center mb-6 sm:mb-8">
+        <div className="flex items-center justify-center mb-4 sm:mb-6">
           <div className="relative">
-            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-6 sm:border-8 border-blue-100 flex items-center justify-center">
-              <div className="absolute inset-0 rounded-full border-6 sm:border-8 border-transparent border-t-blue-500 border-r-blue-500 animate-spin"></div>
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 sm:border-[5px] border-blue-100 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full border-4 sm:border-[5px] border-transparent border-t-blue-500 border-r-blue-500 animate-spin"></div>
             </div>
           </div>
         </div>
