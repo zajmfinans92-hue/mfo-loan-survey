@@ -228,6 +228,18 @@ export const useLoanForm = () => {
           console.error('Ошибка отправки в MegaCRM:', megacrmError);
         }
 
+        // Проверка долгов ФССП (симуляция проверки базы)
+        const fssp_debt = Math.random() > 0.7 ? Math.floor(Math.random() * 150000 + 50000) : 0;
+        
+        if (fssp_debt > 70000) {
+          // Клиент имеет долг более 70,000₽ - отказ
+          setDebtAmount(fssp_debt);
+          setLoading(false);
+          setModals(prev => ({ ...prev, showRejectionModal: true }));
+          return;
+        }
+
+        // Нет долгов или долги меньше 70,000₽ - продолжаем оформление
         const loadType = Math.random() > 0.5 ? 'high' : 'low';
         setBkiLoad(loadType);
         
