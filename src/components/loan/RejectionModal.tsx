@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 
@@ -9,6 +9,15 @@ interface RejectionModalProps {
 }
 
 const RejectionModal = ({ open, onOpenChange, debtAmount }: RejectionModalProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      setIsLoading(true);
+      setTimeout(() => setIsLoading(false), 1500);
+    }
+  }, [open]);
+
   useEffect(() => {
     if (open) {
       const script = document.createElement('script');
@@ -40,7 +49,12 @@ const RejectionModal = ({ open, onOpenChange, debtAmount }: RejectionModalProps)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className={`max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl ${isLoading ? 'border-4 animate-border-glow' : ''}`}>
+        {isLoading && (
+          <div className="absolute inset-0 pointer-events-none z-10">
+            <div className="absolute inset-0 animate-border-glow opacity-20 rounded-2xl"></div>
+          </div>
+        )}
         <DialogHeader>
           <div className="flex items-center gap-3 mb-2">
             <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">

@@ -83,28 +83,7 @@ export default function ManagerModal({
             </div>
           </Card>
 
-          <div className="bg-white rounded-2xl p-6 border-2 border-gray-100 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <img
-                  src={manager.photo}
-                  alt={manager.name}
-                  className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
-                />
-                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-4 border-white"></div>
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold text-gray-900">{manager.name}</h3>
-                <p className="text-sm text-gray-600">{manager.position}</p>
-                <div className={`inline-flex items-center gap-2 ${status.bgColor} px-3 py-1 rounded-full mt-2`}>
-                  <Icon name={status.icon} className={status.color} size={14} />
-                  <span className={`text-xs font-semibold ${status.color}`}>{status.text}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <Card className="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <Card className="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200 animate-slide-up" style={{ animationDelay: '0.1s' }}>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <Icon name="Clock" className="text-blue-600" size={20} />
@@ -123,7 +102,7 @@ export default function ManagerModal({
             </div>
           </Card>
 
-          <div className="pt-2 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="pt-2 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <Button
               onClick={() => onOpenChange(false)}
               className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-6 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105"
@@ -132,7 +111,7 @@ export default function ManagerModal({
             </Button>
           </div>
 
-          <div className="text-center animate-fade-in" style={{ animationDelay: '0.4s' }}>
+          <div className="text-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <p className="text-xs text-muted-foreground">
               Менеджер свяжется с вами в течение <span className="font-semibold text-foreground">15 минут</span> в рабочее время
             </p>
