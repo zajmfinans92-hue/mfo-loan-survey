@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -14,14 +15,25 @@ export default function PrivacyPolicyModal({
   onOpenChange,
   onAccept,
 }: PrivacyPolicyModalProps) {
+  const [isAccepting, setIsAccepting] = useState(false);
+
   const handleAccept = () => {
-    onAccept();
-    onOpenChange(false);
+    setIsAccepting(true);
+    setTimeout(() => {
+      onAccept();
+      onOpenChange(false);
+      setIsAccepting(false);
+    }, 1500);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] p-0">
+      <DialogContent className={`max-w-2xl max-h-[90vh] p-0 relative overflow-hidden ${isAccepting ? 'border-4 animate-border-glow' : ''}`}>
+        {isAccepting && (
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute inset-0 animate-border-glow opacity-20 rounded-lg"></div>
+          </div>
+        )}
         <DialogHeader className="p-4 md:p-6 pb-2 md:pb-3">
           <DialogTitle className="text-xl md:text-2xl font-bold flex items-center gap-2">
             <Icon name="Shield" size={24} className="text-primary" />
