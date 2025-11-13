@@ -109,10 +109,7 @@ export const useLoanForm = () => {
           });
           return false;
         }
-        if (!privacyAccepted) {
-          setModals(prev => ({ ...prev, showPrivacyModal: true }));
-          return false;
-        }
+        setPrivacyAccepted(true);
         break;
       case 3:
         if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.birthDate) {
